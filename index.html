@@ -17,10 +17,26 @@
             <span class="bi bi-list" aria-label="Screen Reader Puzzle"></span>
           </button>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Nouveau jeu</a></li>
-            <li><a class="dropdown-item" href="#">Règles</a></li>
+            <li><a class="dropdown-item" href="./">Nouveau jeu</a></li>
+            <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#rules_modal">Règles du jeu</button></li>
           </ul>
         </nav>
+      </div>
+      <!-- Modal -->
+      <div class="modal fade" id="rules_modal" tabindex="-1" aria-label="Règles du jeu" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5">Règles du jeu</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+            <div class="modal-body">
+              <ul>
+                <li>L'objectif principal est d'effectuer l'action demandée en dépensant le moins d'énergie (<span class="bi bi-lightning"></span>) possible.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </header>
     <main role="main">
@@ -46,91 +62,97 @@
             <h2 class="visually-hidden">Boutique</h2>
             <h3 class="h6 text-uppercase fw-bold"><span class="bi bi-megaphone" aria-label="Boutique"></span> Vocalisation</h2>
             <div class="card mb-3">
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  <span><kbd>NVDA</kbd>+<kbd>t</kbd></span>
-                  Titre de la page
-                  <button class="btn btn-primary" type="button">10 <span class="bi bi-lightning"></span></button>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  <span><kbd>NVDA</kbd>+<kbd>f7</kbd></span>
-                  Liste des titres
-                  <button class="btn btn-primary" type="button">1000 <span class="bi bi-lightning"></span></button>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  <span><kbd>NVDA</kbd>+<kbd>f7</kbd></span>
-                  Liste des liens
-                  <button class="btn btn-primary" type="button">1000 <span class="bi bi-lightning"></span></button>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  <span><kbd>NVDA</kbd>+<kbd>f7</kbd></span>
-                  Liste des champs de formulaires
-                  <button class="btn btn-primary" type="button">1000 <span class="bi bi-lightning"></span></button>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  <span><kbd>NVDA</kbd>+<kbd>f7</kbd></span>
-                  Liste des régions
-                  <button class="btn btn-primary" type="button">500 <span class="bi bi-lightning"></span></button>
-                </li>
-              </ul>
+              <form>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span><kbd>NVDA</kbd>+<kbd>t</kbd></span>
+                    Titre de la page
+                    <button class="btn btn-primary unique-item" type="submit" value="10">10 <span class="bi bi-lightning"></span></button>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span><kbd>NVDA</kbd>+<kbd>f7</kbd></span>
+                    Liste des titres
+                    <button class="btn btn-primary unique-item" type="submit" value="1000">1000 <span class="bi bi-lightning"></span></button>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span><kbd>NVDA</kbd>+<kbd>f7</kbd></span>
+                    Liste des liens
+                    <button class="btn btn-primary unique-item" type="submit" value="1000">1000 <span class="bi bi-lightning"></span></button>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span><kbd>NVDA</kbd>+<kbd>f7</kbd></span>
+                    Liste des champs de formulaires
+                    <button class="btn btn-primary unique-item" type="submit" value="1000">1000 <span class="bi bi-lightning"></span></button>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span><kbd>NVDA</kbd>+<kbd>f7</kbd></span>
+                    Liste des régions
+                    <button class="btn btn-primary unique-item" type="submit" value="500">500 <span class="bi bi-lightning"></span></button>
+                  </li>
+                </ul>
+              </form>
             </div>
             <h3 class="h6 text-uppercase fw-bold"><span class="bi bi-hand-index-thumb" aria-label="Boutique"></span> Navigation</h2>
             <div class="card mb-3">
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  <span><kbd>entrée</kbd></span>
-                  Activer élément focusé
-                  <button class="btn btn-primary" type="button">10 <span class="bi bi-lightning"></span></button>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  <span><kbd>espace</kbd></span>
-                  Activer/désactiver case à cocher
-                  <button class="btn btn-primary" type="button">10 <span class="bi bi-lightning"></span></button>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  <span><kbd>échap</kbd></span>
-                  Fermer
-                  <button class="btn btn-primary" type="button">10 <span class="bi bi-lightning"></span></button>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  <span><kbd>Tab</kbd></span>
-                  Prochain élément focusable
-                  <button class="btn btn-primary" type="button">20 <span class="bi bi-lightning"></span></button>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  <span><kbd>flèche bas</kbd></span>
-                  Prochain élément texte
-                  <button class="btn btn-primary" type="button">20 <span class="bi bi-lightning"></span></button>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  <span><kbd>i</kbd></span>
-                  Prochain élément de liste
-                  <button class="btn btn-primary" type="button">20 <span class="bi bi-lightning"></span></button>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  <span><kbd>h</kbd></span>
-                  Prochain titre de niveau
-                  <button class="btn btn-primary" type="button">100 <span class="bi bi-lightning"></span></button>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  <span><kbd>d</kbd></span>
-                  Prochaine région
-                  <button class="btn btn-primary" type="button">100 <span class="bi bi-lightning"></span></button>
-                </li>
-              </ul>
+              <form>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span><kbd>entrée</kbd></span>
+                    Activer élément focusé
+                    <button class="btn btn-primary" type="submit" value="10">10 <span class="bi bi-lightning"></span></button>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span><kbd>espace</kbd></span>
+                    Activer/désactiver case à cocher
+                    <button class="btn btn-primary" type="submit" value="10">10 <span class="bi bi-lightning"></span></button>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span><kbd>échap</kbd></span>
+                    Fermer
+                    <button class="btn btn-primary" type="submit" value="10">10 <span class="bi bi-lightning"></span></button>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span><kbd>Tab</kbd></span>
+                    Prochain élément focusable
+                    <button class="btn btn-primary" type="submit" value="200">20 <span class="bi bi-lightning"></span></button>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span><kbd>flèche bas</kbd></span>
+                    Prochain élément texte
+                    <button class="btn btn-primary" type="submit" value="20">20 <span class="bi bi-lightning"></span></button>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span><kbd>i</kbd></span>
+                    Prochain élément de liste
+                    <button class="btn btn-primary" type="submit" value="20">20 <span class="bi bi-lightning"></span></button>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span><kbd>h</kbd></span>
+                    Prochain titre de niveau
+                    <button class="btn btn-primary" type="submit" value="100">100 <span class="bi bi-lightning"></span></button>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span><kbd>d</kbd></span>
+                    Prochaine région
+                    <button class="btn btn-primary" type="submit" value="100">100 <span class="bi bi-lightning"></span></button>
+                  </li>
+                </ul>
+              </form>
             </div>
             <h3 class="h6 text-uppercase fw-bold"><span class="bi bi-eye" aria-label="Boutique"></span> Visualisation</h2>
             <div class="card mb-3">
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  Masque de lecture
-                  <button class="btn btn-primary" type="button">2000 <span class="bi bi-lightning"></span></button>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  Page complète
-                  <button class="btn btn-primary" type="button">10000 <span class="bi bi-lightning"></span></button>
-                </li>
-              </ul>
+              <form>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Masque de lecture
+                    <button class="btn btn-primary unique-item" type="submit" value="2000">2000 <span class="bi bi-lightning"></span></button>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Page complète
+                    <button class="btn btn-primary unique-item" type="submit" value="10000">10000 <span class="bi bi-lightning"></span></button>
+                  </li>
+                </ul>
+              </form>
             </div>
           </div>
         </div>
@@ -157,14 +179,14 @@
             <div class="dropdown-menu text-nowrap">
               <form class="py-1 px-3">
                 <div class="form-check form-switch">
-                  <label class="form-check-label">
-                    <input class="form-check-input" type="checkbox" role="switch">
+                  <input class="form-check-input" type="checkbox" role="switch" id="viz_mask">
+                  <label class="form-check-label" for="viz_mask">
                     Masque de lecture
                   </label>
                 </div>
                 <div class="form-check form-switch">
-                  <label class="form-check-label">
-                    <input class="form-check-input" type="checkbox" role="switch">
+                  <input class="form-check-input" type="checkbox" role="switch" id="viz_page">
+                  <label class="form-check-label" for="viz_page">
                     Page complète
                   </label>
                 </div>
@@ -175,7 +197,7 @@
         <div class="alert alert-info d-flex align-items-center my-2" role="alert">
           <span class="bi bi-info-circle-fill flex-shrink-0 me-2" aria-label="Vocalisation"></span>
           <div>
-            <h2 class="h6 m-0">Dépense totale&nbsp;: 100 <span class="bi bi-lightning"></span></h2>
+            <h2 class="h6 m-0">Dépense totale&nbsp;: <span id="total_cost">0</span> <span class="bi bi-lightning"></span></h2>
           </div>
         </div>
         &copy; 2024
@@ -183,5 +205,5 @@
     </footer>
   </body>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-  <script type="module" src="assets/js/srp.js"></script>
+  <script src="assets/js/srp.js"></script>
 </html>
