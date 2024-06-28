@@ -1,0 +1,19 @@
+* {
+  scroll-padding-top: 0 !important;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex-grow: 1;
+  overflow: hidden;
+  height: 100%;
+  overflow-y: auto;
+}

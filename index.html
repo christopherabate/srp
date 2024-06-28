@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="fr" data-bs-theme="dark">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="assets/css/srp.css" rel="stylesheet">
+    <title>Screen Reader Puzzle</title>
+  </head>
+  <body>
+    <header role="banner">
+      <div class="container-fluid d-flex align-items-center justify-content-between py-1">
+        <h1 class="lead m-0"><a class="text-body text-decoration-none" href="./"><span class="bi bi-eye-slash"></span> Screen Reader Puzzle</a></h1>
+        <nav class="dropdown">
+          <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" type="button" aria-expanded="false">
+            <span class="bi bi-list" aria-label="Screen Reader Puzzle"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Nouveau jeu</a></li>
+            <li><a class="dropdown-item" href="#">Règles</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main role="main">
+      <div class="container-fluid h-100">
+        <div class="row h-100">
+          <div class="col-md-8 mb-3">
+            <div class="card h-100">
+              <div class="card-header d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="bi bi-circle-fill text-danger"></span>
+                  <span class="bi bi-circle-fill text-warning"></span>
+                  <span class="bi bi-circle-fill text-success"></span>
+                </div>
+                <h2 class="h6 fw-bold m-0">Puzzle</h2>
+                <span class="bi bi-window"></span>
+              </div>
+              <div class="card-body d-flex overflow-hidden p-0">
+                <iframe title="Titre de la page" class="flex-grow-1 h-100 w-100 bg-white" src="https://boosted.orange.com/docs/5.3/examples/form/"></iframe>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <h2 class="visually-hidden">Boutique</h2>
+            <h3 class="h6 text-uppercase fw-bold"><span class="bi bi-megaphone" aria-label="Boutique"></span> Vocalisation</h2>
+            <div class="card mb-3">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <span><kbd>NVDA</kbd>+<kbd>t</kbd></span>
+                  Titre de la page
+                  <button class="btn btn-success" type="button">10 <span class="bi bi-cash"></span></button>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <span><kbd>NVDA</kbd>+<kbd>f7</kbd></span>
+                  Liste des titres
+                  <button class="btn btn-success" type="button">1000 <span class="bi bi-cash"></span></button>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <span><kbd>NVDA</kbd>+<kbd>f7</kbd></span>
+                  Liste des liens
+                  <button class="btn btn-success" type="button">1000 <span class="bi bi-cash"></span></button>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <span><kbd>NVDA</kbd>+<kbd>f7</kbd></span>
+                  Liste des champs de formulaires
+                  <button class="btn btn-success" type="button">1000 <span class="bi bi-cash"></span></button>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <span><kbd>NVDA</kbd>+<kbd>f7</kbd></span>
+                  Liste des régions
+                  <button class="btn btn-success" type="button">500 <span class="bi bi-cash"></span></button>
+                </li>
+              </ul>
+            </div>
+            <h3 class="h6 text-uppercase fw-bold"><span class="bi bi-hand-index-thumb" aria-label="Boutique"></span> Navigation</h2>
+            <div class="card mb-3">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <span><kbd>entrée</kbd></span>
+                  Activer élément focusé
+                  <button class="btn btn-success" type="button">10 <span class="bi bi-cash"></span></button>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <span><kbd>espace</kbd></span>
+                  Activer/désactiver case à cocher
+                  <button class="btn btn-success" type="button">10 <span class="bi bi-cash"></span></button>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <span><kbd>échap</kbd></span>
+                  Fermer
+                  <button class="btn btn-success" type="button">10 <span class="bi bi-cash"></span></button>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <span><kbd>Tab</kbd></span>
+                  Prochain élément focusable
+                  <button class="btn btn-success" type="button">20 <span class="bi bi-cash"></span></button>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <span><kbd>flèche bas</kbd></span>
+                  Prochain élément texte
+                  <button class="btn btn-success" type="button">20 <span class="bi bi-cash"></span></button>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <span><kbd>i</kbd></span>
+                  Prochain élément de liste
+                  <button class="btn btn-success" type="button">20 <span class="bi bi-cash"></span></button>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <span><kbd>h</kbd></span>
+                  Prochain titre de niveau
+                  <button class="btn btn-success" type="button">100 <span class="bi bi-cash"></span></button>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <span><kbd>d</kbd></span>
+                  Prochaine région
+                  <button class="btn btn-success" type="button">100 <span class="bi bi-cash"></span></button>
+                </li>
+              </ul>
+            </div>
+            <h3 class="h6 text-uppercase fw-bold"><span class="bi bi-eye" aria-label="Boutique"></span> Visualisation</h2>
+            <div class="card mb-3">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Masque de lecture
+                  <button class="btn btn-success" type="button">2000 <span class="bi bi-cash"></span></button>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Page complète
+                  <button class="btn btn-success" type="button">10000 <span class="bi bi-cash"></span></button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div class="container-fluid d-flex align-items-center justify-content-between py-1">
+        <div class="btn-group" role="group">
+          <h2 class="visually-hidden">Vocalisation achetées</h2>
+          <nav class="dropdown">
+            <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" type="button" aria-expanded="false">
+              <span class="bi bi-megaphone" aria-label="Vocalisation"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#"><span class="bi bi-play-circle-fill" aria-label="Lecture"></span> Titre de la page</a></li>
+              <li><a class="dropdown-item" href="#"><span class="bi bi-play-circle-fill" aria-label="Lecture"></span> Liste des titres</a></li>
+            </ul>
+          </nav>
+          <h2 class="visually-hidden">Visualisation achetées</h2>
+          <nav class="dropdown">
+            <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside" type="button" aria-expanded="false">
+              <span class="bi bi-eye" aria-label="Visualisation"></span>
+            </button>
+            <div class="dropdown-menu text-nowrap">
+              <form class="py-1 px-3">
+                <div class="form-check form-switch">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" role="switch">
+                    Masque de lecture
+                  </label>
+                </div>
+                <div class="form-check form-switch">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" role="switch">
+                    Page complète
+                  </label>
+                </div>
+              </form>
+            </div>
+          </nav>
+        </div>
+        <h2 class="h6">Portefeuille : 100 <span class="bi bi-cash-stack"></span></h2>
+      </div>
+    </footer>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script type="module" src="assets/js/srp.js"></script>
+</html>
