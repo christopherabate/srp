@@ -170,13 +170,33 @@
         <div class="btn-group" role="group">
           <h2 class="visually-hidden">Vocalisations achetées</h2>
           <nav class="dropdown">
-            <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" type="button" aria-expanded="false">
+            <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside" type="button" aria-expanded="false">
               <span class="bi bi-megaphone" aria-label="Vocalisation"></span>
             </button>
             <ul class="dropdown-menu text-nowrap">
               <li class="dropdown-header">Vocalisations achetés&nbsp;:</li>
-              <li id="voc_title" class="d-none"><a class="dropdown-item" href="#"><span class="bi bi-play-circle-fill" aria-label="Lecture"></span> Titre de la page</a></li>
-              <li id="voc_titles" class="d-none"><a class="dropdown-item" href="#"><span class="bi bi-play-circle-fill" aria-label="Lecture"></span> Liste des titres</a></li>
+              <li id="voc_title" class="d-none px-3">
+                <dl class="mb-0">
+                  <dt>Titre de la page</dt>
+                  <dd>
+                    <audio controls>
+                      <source src="assets/audio/horse.mp3" type="audio/mpeg">
+                      Titre de la page
+                    </audio>
+                  </dd>
+                </dl>
+              </li>
+              <li id="voc_titles" class="d-none px-3">
+                <dl class="mb-0">
+                  <dt>Liste des titres</dt>
+                  <dd>
+                    <audio controls>
+                      <source src="assets/audio/horse.mp3" type="audio/mpeg">
+                      Liste des titres
+                    </audio>
+                  </dd>
+                </dl>
+              </li>
             </ul>
           </nav>
           <h2 class="visually-hidden">Visualisations achetées</h2>
@@ -189,19 +209,19 @@
                 <p class="dropdown-header mb-0 p-1">Visualisations achetés&nbsp;:</p>
                 <div id="viz_title" class="form-check form-switch d-none">
                   <input class="form-check-input" type="checkbox" role="switch" name="title">
-                  <label class="form-check-label" for="viz_title">
+                  <label class="form-check-label fw-bold" for="viz_title">
                     Titre de la page
                   </label>
                 </div>
                 <div id="viz_mask" class="form-check form-switch d-none">
                   <input class="form-check-input" type="checkbox" role="switch" name="mask">
-                  <label class="form-check-label" for="viz_mask">
+                  <label class="form-check-label fw-bold" for="viz_mask">
                     Masque de lecture
                   </label>
                 </div>
                 <div id="viz_page" class="form-check form-switch d-none">
                   <input class="form-check-input" type="checkbox" role="switch" name="page">
-                  <label class="form-check-label" for="viz_page">
+                  <label class="form-check-label fw-bold" for="viz_page">
                     Page complète
                   </label>
                 </div>
