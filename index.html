@@ -106,42 +106,42 @@
                   <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span><kbd>entrée</kbd></span>
                     Activer élément focusé
-                    <button class="btn btn-primary btn-sm stretched-link" type="submit" value="10">10 <span class="bi bi-lightning"></span></button>
+                    <button class="btn btn-primary btn-sm stretched-link" type="submit" value="10" data-srp-item="Activer élément focusé">10 <span class="bi bi-lightning"></span></button>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span><kbd>espace</kbd></span>
                     Activer/désactiver case à cocher
-                    <button class="btn btn-primary btn-sm stretched-link" type="submit" value="10">10 <span class="bi bi-lightning"></span></button>
+                    <button class="btn btn-primary btn-sm stretched-link" type="submit" value="10" data-srp-item="Activer/désactiver case à cocher">10 <span class="bi bi-lightning"></span></button>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span><kbd>échap</kbd></span>
                     Fermer
-                    <button class="btn btn-primary btn-sm stretched-link" type="submit" value="10">10 <span class="bi bi-lightning"></span></button>
+                    <button class="btn btn-primary btn-sm stretched-link" type="submit" value="10" data-srp-item="Fermer">10 <span class="bi bi-lightning"></span></button>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span><kbd>Tab</kbd></span>
                     Prochain élément focusable
-                    <button class="btn btn-primary btn-sm stretched-link" type="submit" value="200">20 <span class="bi bi-lightning"></span></button>
+                    <button class="btn btn-primary btn-sm stretched-link" type="submit" value="200" data-srp-item="Prochain élément focusable">20 <span class="bi bi-lightning"></span></button>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span><kbd>flèche bas</kbd></span>
                     Prochain élément texte
-                    <button class="btn btn-primary btn-sm stretched-link" type="submit" value="20">20 <span class="bi bi-lightning"></span></button>
+                    <button class="btn btn-primary btn-sm stretched-link" type="submit" value="20" data-srp-item="Prochain élément texte">20 <span class="bi bi-lightning"></span></button>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span><kbd>i</kbd></span>
                     Prochain élément de liste
-                    <button class="btn btn-primary btn-sm stretched-link" type="submit" value="20">20 <span class="bi bi-lightning"></span></button>
+                    <button class="btn btn-primary btn-sm stretched-link" type="submit" value="20" data-srp-item="Prochain élément de liste">20 <span class="bi bi-lightning"></span></button>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span><kbd>h</kbd></span>
                     Prochain titre de niveau
-                    <button class="btn btn-primary btn-sm stretched-link" type="submit" value="100">100 <span class="bi bi-lightning"></span></button>
+                    <button class="btn btn-primary btn-sm stretched-link" type="submit" value="100" data-srp-item="Prochain titre de niveau">100 <span class="bi bi-lightning"></span></button>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span><kbd>d</kbd></span>
                     Prochaine région
-                    <button class="btn btn-primary btn-sm stretched-link" type="submit" value="100">100 <span class="bi bi-lightning"></span></button>
+                    <button class="btn btn-primary btn-sm stretched-link" type="submit" value="100" data-srp-item="Prochaine région">100 <span class="bi bi-lightning"></span></button>
                   </li>
                 </ul>
               </form>
@@ -231,6 +231,15 @@
                 </dl>
               </li>
             </ul>
+          </nav>
+          <h2 class="visually-hidden">Historique de navigation</h2>
+          <nav class="dropdown">
+            <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside" type="button" aria-expanded="false">
+              <span class="bi bi-hand-index-thumb" aria-label="Navigation"></span>
+            </button>
+            <ol class="dropdown-menu text-nowrap" id="nav_history">
+              <li class="dropdown-header">Historique de navigation&nbsp;:</li>
+            </ol>
           </nav>
           <h2 class="visually-hidden">Visualisations achetées</h2>
           <nav class="dropdown">
