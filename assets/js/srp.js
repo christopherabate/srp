@@ -4,11 +4,13 @@ document.querySelectorAll(".card form").forEach((items) => {
 
     event.preventDefault();
     
-    // Disable the item
     if (event.submitter.classList.contains("unique-item")) {
+      // Disable the item
       event.submitter.disabled = true;
+      // Update the menu
       document.querySelector("#" + event.submitter.dataset.srpItem).classList.remove("d-none");
     } else {
+      // Update history
       document.querySelector("#nav_history").appendChild(Object.assign(document.createElement("li"), {
         innerHTML: [`<span class="dropdown-item-text">${event.submitter.dataset.srpItem}</span>`]
       }));
@@ -23,7 +25,7 @@ document.querySelectorAll(".card form").forEach((items) => {
 });
 
 // Handle visualization
-document.querySelector(".dropdown form").addEventListener("change", (event) => {
+document.querySelector("form#viz").addEventListener("change", (event) => {
   if (event.srcElement.name == "mask" && event.srcElement.checked == true) {
     document.querySelector("#mask").classList.remove("invisible");
     document.querySelector("#mask").classList.add("visible");

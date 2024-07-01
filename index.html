@@ -173,71 +173,23 @@
             <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside" type="button" aria-expanded="false">
               <span class="bi bi-megaphone" aria-label="Vocalisation"></span>
             </button>
-            <ul class="dropdown-menu text-nowrap">
-              <li class="dropdown-header">Vocalisations achetés&nbsp;:</li>
-              <li id="voc_title" class="d-none px-3">
-                <dl class="mb-0">
-                  <dt>Titre de la page</dt>
-                  <dd>
-                    <audio controls>
-                      <source src="assets/audio/horse.mp3" type="audio/mpeg">
-                      Titre de la page
-                    </audio>
-                  </dd>
-                </dl>
-              </li>
-              <li id="voc_titles" class="d-none px-3">
-                <dl class="mb-0">
-                  <dt>Liste des titres</dt>
-                  <dd>
-                    <audio controls>
-                      <source src="assets/audio/horse.mp3" type="audio/mpeg">
-                      Liste des titres
-                    </audio>
-                  </dd>
-                </dl>
-              </li>
-              <li id="voc_links" class="d-none px-3">
-                <dl class="mb-0">
-                  <dt>Liste des liens</dt>
-                  <dd>
-                    <audio controls>
-                      <source src="assets/audio/horse.mp3" type="audio/mpeg">
-                      Liste des liens
-                    </audio>
-                  </dd>
-                </dl>
-              </li>
-              <li id="voc_forms" class="d-none px-3">
-                <dl class="mb-0">
-                  <dt>Liste des champs de formulaires</dt>
-                  <dd>
-                    <audio controls>
-                      <source src="assets/audio/horse.mp3" type="audio/mpeg">
-                      Liste des champs de formulaires
-                    </audio>
-                  </dd>
-                </dl>
-              </li>
-              <li id="voc_regions" class="d-none px-3">
-                <dl class="mb-0">
-                  <dt>Liste des régions</dt>
-                  <dd>
-                    <audio controls>
-                      <source src="assets/audio/horse.mp3" type="audio/mpeg">
-                      Liste des régions
-                    </audio>
-                  </dd>
-                </dl>
-              </li>
-            </ul>
+            <div class="dropdown-menu text-nowrap">
+              <form id="voc" class="py-1 px-3">
+                <p class="dropdown-header mb-0 p-1">Vocalisations achetés&nbsp;:</p>
+                <button id="voc_title" class="dropdown-item d-none" type="submit" data-srp-speak="Titre de la page">Titre de la page</button>
+                <button id="voc_titles" class="btn btn-primary btn-sm dropdown-item d-none" type="submit" data-srp-speak="Liste des titres de niveaux">Liste des titres</button>
+                <button id="voc_links" class="btn btn-primary btn-sm dropdown-item d-none" type="submit" data-srp-speak="Liste des liens">Liste des liens</button>
+                <button id="voc_forms" class="btn btn-primary btn-sm dropdown-item d-none" type="submit" data-srp-speak="Liste des champs de formulaires">Liste des champs de formulaires</button>
+                <button id="voc_regions" class="btn btn-primary btn-sm dropdown-item d-none" type="submit" data-srp-speak="Liste de régions">Liste de régions</button>
+              </form>
+            </div>
           </nav>
           <h2 class="visually-hidden">Historique de navigation</h2>
           <nav class="dropup">
             <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside" type="button" aria-expanded="false">
               <span class="bi bi-hand-index-thumb" aria-label="Navigation"></span>
             </button>
-            <ol class="dropdown-menu text-nowrap" id="nav_history">
+            <ol id="nav_history" class="dropdown-menu text-nowrap">
               <li class="dropdown-header">Historique de navigation&nbsp;:</li>
             </ol>
           </nav>
@@ -247,23 +199,23 @@
               <span class="bi bi-eye" aria-label="Visualisation"></span>
             </button>
             <div class="dropdown-menu text-nowrap">
-              <form class="py-1 px-3">
+              <form id="viz" class="py-1 px-3">
                 <p class="dropdown-header mb-0 p-1">Visualisations achetés&nbsp;:</p>
                 <div id="viz_title" class="form-check form-switch d-none">
                   <input class="form-check-input" type="checkbox" role="switch" name="title">
-                  <label class="form-check-label fw-bold" for="viz_title">
+                  <label class="form-check-label" for="viz_title">
                     Titre de la page
                   </label>
                 </div>
                 <div id="viz_mask" class="form-check form-switch d-none">
                   <input class="form-check-input" type="checkbox" role="switch" name="mask">
-                  <label class="form-check-label fw-bold" for="viz_mask">
+                  <label class="form-check-label" for="viz_mask">
                     Masque de lecture
                   </label>
                 </div>
                 <div id="viz_page" class="form-check form-switch d-none">
                   <input class="form-check-input" type="checkbox" role="switch" name="page">
-                  <label class="form-check-label fw-bold" for="viz_page">
+                  <label class="form-check-label" for="viz_page">
                     Page complète
                   </label>
                 </div>
