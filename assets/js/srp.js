@@ -12,8 +12,10 @@ document.querySelectorAll(".card form").forEach((items) => {
       document.querySelector("#nav_history").appendChild(Object.assign(document.createElement("li"), {
         innerHTML: [`<span class="dropdown-item-text">${event.submitter.dataset.srpItem}</span>`]
       }));
-      speechSynthesis.speak(new SpeechSynthesisUtterance(event.submitter.dataset.srpItem));
     }
+    
+    //Text to speech
+    if (event.submitter.dataset.srpSpeak) speechSynthesis.speak(new SpeechSynthesisUtterance(event.submitter.dataset.srpSpeak));
     
     // Increase total cost
     document.querySelector("#total_cost").textContent = parseInt(document.querySelector("#total_cost").textContent, 10) + parseInt(event.submitter.textContent, 10);
