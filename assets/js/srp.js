@@ -7,9 +7,13 @@ document.querySelectorAll(".card form").forEach((items) => {
     // Disable the item
     if (event.submitter.classList.contains("unique-item")) {
       event.submitter.disabled = true;
+      document.querySelector("#" + event.submitter.dataset.srpItem).classList.remove("d-none");
+    } else {
+      document.querySelector("#nav_history").appendChild(Object.assign(document.createElement("li"), {
+        innerHTML: [`<span class="dropdown-item-text">${event.submitter.dataset.srpItem}</span>`]
+      }));
+      speechSynthesis.speak(new SpeechSynthesisUtterance(event.submitter.dataset.srpItem));
     }
-    
-    document.querySelector("#" + event.submitter.dataset.srpItem).classList.remove("d-none");
     
     // Increase total cost
     document.querySelector("#total_cost").textContent = parseInt(document.querySelector("#total_cost").textContent, 10) + parseInt(event.submitter.textContent, 10);
