@@ -24,6 +24,13 @@ document.querySelectorAll(".card form").forEach((items) => {
   });
 });
 
+// Handle vocalisation
+document.querySelector("form#voc").addEventListener("submit", (event) => {
+  event.preventDefault();
+  
+  if (event.submitter.dataset.srpSpeak) speechSynthesis.speak(new SpeechSynthesisUtterance(event.submitter.dataset.srpSpeak));
+});
+
 // Handle visualization
 document.querySelector("form#viz").addEventListener("change", (event) => {
   if (event.srcElement.name == "mask" && event.srcElement.checked == true) {
