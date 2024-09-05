@@ -40,51 +40,41 @@
       </div>
     </header>
     <main role="main">
-      <div class="container-fluid h-100">
-        <div class="row h-100">
-          <div class="col-md-8 mb-3">
-            <div id="puzzle" class="card h-100">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <div class="card mb-3">
               <div class="card-header d-flex justify-content-between align-items-center">
                 <div>
                   <span class="bi bi-circle-fill text-danger"></span>
                   <span class="bi bi-circle-fill text-warning"></span>
                   <span class="bi bi-circle-fill text-success"></span>
                 </div>
-                <h2 class="h6 text-uppercase fw-bold m-0">Puzzle</h2>
+                <h2 class="h6 text-uppercase fw-bold m-0">Liste d'éléments</h2>
                 <span class="bi bi-window"></span>
               </div>
-              <div class="card-body d-flex overflow-hidden p-0">
-                <div class="h-100 w-100 position-relative">
-                  <div id="mask" class="invisible">
-                    <div class="w-100 position-absolute bg-dark top-0" style="height:47.5%;"></div>
-                    <div class="w-100 position-absolute bg-dark bottom-0" style="height:47.5%;"></div>
-                  </div>
-                  <div id="page" class="h-100 w-100 position-absolute bg-light visible"></div>
-                  <iframe title="Titre de la page" class="flex-grow-1 h-100 w-100 bg-white" src="https://boosted.orange.com/docs/5.3/examples/form/"></iframe>
-                </div>
-              </div>
+              <samp class="card-body text-bg-light">
+                <ol id="list" class="card-text">
+                </ol>
+              </samp>
             </div>
-          </div>
-          <div class="col-md-4">
-            <h2 class="visually-hidden">Boutique</h2>
-            <h3 class="h6 text-uppercase fw-bold"><span class="bi bi-megaphone" aria-label="Boutique"></span> Vocalisation</h2>
             <div class="card mb-3">
               <form>
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span><kbd>NVDA</kbd>+<kbd>t</kbd></span>
                     Titre de la page
-                    <button class="btn btn-primary btn-sm unique-item stretched-link" type="submit" value="10" data-srp-item="voc_title" data-srp-speak="Titre de la page">10 <span class="bi bi-lightning"></span></button>
+                    <button class="btn btn-primary btn-sm unique-item stretched-link" type="submit" value="10" data-srp-item="voc_title" data-srp-speak="Titre de la page" disabled="">10 <span class="bi bi-lightning"></span></button>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span><kbd>NVDA</kbd>+<kbd>f7</kbd></span>
                     Liste des titres
-                    <button class="btn btn-primary btn-sm unique-item stretched-link" type="submit" value="1000" data-srp-item="voc_titles" data-srp-speak="Liste des titres de niveaux">1000 <span class="bi bi-lightning"></span></button>
+                    <button class="btn btn-primary btn-sm unique-item stretched-link" type="submit" value="1000" data-srp-item="voc_titles" data-srp-speak="Liste des titres de niveaux" disabled="">1000 <span class="bi bi-lightning"></span></button>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span><kbd>NVDA</kbd>+<kbd>f7</kbd></span>
                     Liste des liens
-                    <button class="btn btn-primary btn-sm unique-item stretched-link" type="submit" value="1000" data-srp-item="voc_links" data-srp-speak="Liste des liens">1000 <span class="bi bi-lightning"></span></button>
+                    <button class="btn btn-primary btn-sm unique-item stretched-link" type="submit" value="1000" data-srp-item="voc_links" data-srp-speak="Liste des liens" disabled="">1000 <span class="bi bi-lightning"></span></button>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span><kbd>NVDA</kbd>+<kbd>f7</kbd></span>
@@ -99,7 +89,23 @@
                 </ul>
               </form>
             </div>
-            <h3 class="h6 text-uppercase fw-bold"><span class="bi bi-hand-index-thumb" aria-label="Boutique"></span> Navigation</h2>
+          </div>
+          <div class="col-md-4 mb-3">
+            <div class="card mb-3">
+              <div class="card-header d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="bi bi-circle-fill text-danger"></span>
+                  <span class="bi bi-circle-fill text-warning"></span>
+                  <span class="bi bi-circle-fill text-success"></span>
+                </div>
+                <h2 class="h6 text-uppercase fw-bold m-0">Historique</h2>
+                <span class="bi bi-window"></span>
+              </div>
+              <samp class="card-body text-bg-light">
+                <ul id="history" class="card-text">
+                </ul>
+              </samp>
+            </div>
             <div class="card mb-3">
               <form>
                 <ul class="list-group list-group-flush">
@@ -146,7 +152,29 @@
                 </ul>
               </form>
             </div>
-            <h3 class="h6 text-uppercase fw-bold"><span class="bi bi-eye" aria-label="Boutique"></span> Visualisation</h2>
+          </div>
+          <div class="col-md-4 mb-3">
+            <div class="card mb-3">
+              <div class="card-header d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="bi bi-circle-fill text-danger"></span>
+                  <span class="bi bi-circle-fill text-warning"></span>
+                  <span class="bi bi-circle-fill text-success"></span>
+                </div>
+                <h2 class="h6 text-uppercase fw-bold m-0">Puzzle</h2>
+                <span class="bi bi-window"></span>
+              </div>
+              <div class="card-body d-flex overflow-hidden p-0">
+                <div class="h-100 w-100 position-relative">
+                  <div id="mask" class="invisible">
+                    <div class="w-100 position-absolute bg-dark top-0" style="height:47.5%;"></div>
+                    <div class="w-100 position-absolute bg-dark bottom-0" style="height:47.5%;"></div>
+                  </div>
+                  <div id="page" class="h-100 w-100 position-absolute bg-light visible"></div>
+                  <iframe id="screen" title="Titre de la page" class="flex-grow-1 h-100 w-100 bg-white" src="screen.html"></iframe>
+                </div>
+              </div>
+            </div>
             <div class="card mb-3">
               <form>
                 <ul class="list-group list-group-flush">
@@ -162,74 +190,30 @@
               </form>
             </div>
           </div>
-        </div>
       </div>
     </main>
     <footer>
       <div class="container-fluid d-flex align-items-center justify-content-between py-1">
-        <div class="btn-group" role="group">
-          <h2 class="visually-hidden">Vocalisations achetées</h2>
-          <nav class="dropup">
-            <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside" type="button" aria-expanded="false">
-              <span class="bi bi-megaphone" aria-label="Vocalisation"></span>
-            </button>
-            <div class="dropdown-menu text-nowrap">
-              <form id="voc" class="py-1 px-3">
-                <p class="dropdown-header mb-0 p-1">Vocalisations achetés&nbsp;:</p>
-                <button id="voc_title" class="btn btn-primary btn-sm dropdown-item d-none" type="submit" data-srp-speak="Titre de la page">Titre de la page</button>
-                <button id="voc_titles" class="btn btn-primary btn-sm dropdown-item d-none" type="submit" data-srp-speak="Liste des titres de niveaux">Liste des titres</button>
-                <button id="voc_links" class="btn btn-primary btn-sm dropdown-item d-none" type="submit" data-srp-speak="Liste des liens">Liste des liens</button>
-                <button id="voc_forms" class="btn btn-primary btn-sm dropdown-item d-none" type="submit" data-srp-speak="Liste des champs de formulaires">Liste des champs de formulaires</button>
-                <button id="voc_regions" class="btn btn-primary btn-sm dropdown-item d-none" type="submit" data-srp-speak="Liste de régions">Liste de régions</button>
-              </form>
-            </div>
-          </nav>
-          <h2 class="visually-hidden">Historique de navigation</h2>
-          <nav class="dropup">
-            <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside" type="button" aria-expanded="false">
-              <span class="bi bi-hand-index-thumb" aria-label="Navigation"></span>
-            </button>
-            <ol id="nav_history" class="dropdown-menu text-nowrap">
-              <li class="dropdown-header">Historique de navigation&nbsp;:</li>
-            </ol>
-          </nav>
-          <h2 class="visually-hidden">Visualisations achetées</h2>
-          <nav class="dropup">
-            <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside" type="button" aria-expanded="false">
-              <span class="bi bi-eye" aria-label="Visualisation"></span>
-            </button>
-            <div class="dropdown-menu text-nowrap">
-              <form id="viz" class="py-1 px-3">
-                <p class="dropdown-header mb-0 p-1">Visualisations achetés&nbsp;:</p>
-                <div id="viz_title" class="form-check form-switch d-none">
-                  <input class="form-check-input" type="checkbox" role="switch" name="title">
-                  <label class="form-check-label" for="viz_title">
-                    Titre de la page
-                  </label>
-                </div>
-                <div id="viz_mask" class="form-check form-switch d-none">
-                  <input class="form-check-input" type="checkbox" role="switch" name="mask">
-                  <label class="form-check-label" for="viz_mask">
-                    Masque de lecture
-                  </label>
-                </div>
-                <div id="viz_page" class="form-check form-switch d-none">
-                  <input class="form-check-input" type="checkbox" role="switch" name="page">
-                  <label class="form-check-label" for="viz_page">
-                    Page complète
-                  </label>
-                </div>
-              </form>
-            </div>
-          </nav>
-        </div>
         <div class="alert alert-info d-flex align-items-center my-2" role="alert">
           <span class="bi bi-info-circle-fill flex-shrink-0 me-2" aria-label="Vocalisation"></span>
           <div>
             <h2 class="h6 m-0">Dépense totale&nbsp;: <span id="total_cost">0</span> <span class="bi bi-lightning"></span></h2>
           </div>
         </div>
-        &copy; 2024
+        <p><a href="#">Github link</a> &copy; 2024</p>
+        <button class="btn btn-link" data-key="ArrowDown" data-keycode="40"><kbd>ArrowDown</kbd></button>
+        <button class="btn btn-link" data-key="ArrowUp" data-keycode="38"><kbd>ArrowUp</kbd></button>
+        <button class="btn btn-link" data-key="Tab" data-keycode="9"><kbd>Tab</kbd></button>
+        <button class="btn btn-link" data-key="Enter" data-keycode="13"><kbd>Enter</kbd></button>
+        <button class="btn btn-link" data-key="Esc" data-keycode="27"><kbd>Esc</kbd></button>
+        <button class="btn btn-link" data-key="Space" data-keycode="32"><kbd>Space</kbd></button>
+        <button class="btn btn-link" data-key="h" data-keycode="72"><kbd>H</kbd></button>
+        <button class="btn btn-link" data-key="i" data-keycode="73"><kbd>I</kbd></button>
+        <button class="btn btn-link" data-key="d" data-keycode="68"><kbd>D</kbd></button>
+        <button class="btn btn-link" data-key="t" data-keycode="84"><kbd>T</kbd></button>
+        <button class="btn btn-link" data-key="1" data-keycode="49"><kbd>1</kbd></button>
+        <button class="btn btn-link" data-key="2" data-keycode="50"><kbd>2</kbd></button>
+        <button class="btn btn-link" data-key="3" data-keycode="51"><kbd>3</kbd></button>
       </div>
     </footer>
   </body>

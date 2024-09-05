@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Page de test</title>
+  </head>
+  <body>
+    <header role="banner">
+      <p>Entête de page</p>
+    </header>
+    <main role="main">
+      <h1>Page de test</h1>
+      <dl>
+  <dt>Beast of Bodmin</dt>
+  <dd>A large feline inhabiting Bodmin Moor.</dd>
+
+  <dt>Morgawr</dt>
+  <dd>A sea serpent.</dd>
+
+  <dt>Owlman</dt>
+  <dd>A giant owl-like creature.</dd>
+</dl>
+      <h2>Titre 2</h2>
+      <h2 style="display:none">Titre maské</h2>
+      <h2>Titre 3</h2>
+      <ul role="navigation">
+        <li><a href="http://google.com/">Liste 1</a></li>
+        <li>Liste 2</li>
+        <li>Liste 3</li>
+        <li aria-hidden="true">Liste 4 <a href="#">lien caché</a></li>
+      </ul>
+      <select class="form-select" aria-label="Default select example" aria-labelledby="error">
+  <option selected>Open this select menu</option>
+  <option >One</option>
+  <option value="2"></option>
+  <option value="3">Three</option>
+</select>
+<p id="error">test erreur</p>
+<label for="exampleFormControlInput1" class="form-label">Email address</label>
+  <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" value="tesvaleur" required>
+  <input class="form-check-input" type="checkbox" checked value="" id="flexCheckDefault">
+  <label class="form-check-label" for="flexCheckDefault">
+    Default checkbox
+  </label>
+    <button class="btn btn-primary" type="submit">Submit form</button>
+    <button class="btn btn-primary" type="submit" disabled="disabled">Cancel form</button>
+
+    </main>
+    <footer>
+      <p><a href="http://google.com/">Plan du site</a></p>
+      <a href="http://google.com/"></a>
+      <p>Pied de page</p>
+      <p aria-hidden="true">Bien caché</p>
+    </footer>
+  </body>
+</html>
