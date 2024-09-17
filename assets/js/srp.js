@@ -1,6 +1,8 @@
 const SCREEN = document.querySelector("#screen");
-const HISTORY = document.querySelector("#history");
-const LIST = document.querySelector("#list");
+const MASK = document.querySelector("#mask");
+const VIEWER = document.querySelector("#viewer");
+const RULES = document.querySelector("#rules_modal");
+const WALLET = document.querySelector("#wallet");
 
 let readable = [];
 let current = 0; // Set first element as current
@@ -25,18 +27,18 @@ function accessibleName(element) {
     || element.closest("fieldset")?.querySelector("legend")?.textContent.trim()
     || element.matches([...Object.keys(ELEMENTS.lists), ...Object.keys(ELEMENTS.landmarks)].toString()) && `${element.children.length} éléments`
     || element.textContent.trim()
-    || element.src
 }
 
 function speech(element) {
   const tag = Object.assign({}, ...Object.values(ELEMENTS))?.[element.tagName];
   return `${tag} "${accessibleName(element) || 'vide'}"`
     + (element.matches(Object.keys(ELEMENTS.interactives)) && element.value ? ` : ${element.value.trim()}` : "")
+    + (element.src && !element.hasAttribute("alt") ? ` (${element.src})` : "")
     + (element.getAttribute("placeholder") ? ` (${element.getAttribute("placeholder")})` : "")
     + (element.required ? " (Obligatoire)" : "")
     + (element.checked ? " (Coché)" : "")
     + (element.selected ? " (Sélectionné)" : "")
-    + (element.disabled ? " (Désactivé)" : "");
+    + (element.disabled ? " (Désactivé)" : "")
 }
 
 function collect(list = "") {
@@ -55,7 +57,7 @@ function list(elements) {
   const readableList = collect(elements);
 
   // Write list
-  LIST.innerHTML = readableList.map(element => `<li>${speech(element)}</li>`).join("");
+  VIEWER.innerHTML = `<ol>${readableList.map(element => `<li>${speech(element)}</li>`).join('')}</ol><div class="text-secondary">${VIEWER.innerHTML}</div>`;
   
   // Speech to text
   speechSynthesis.cancel();
@@ -63,8 +65,8 @@ function list(elements) {
 }
 
 function output(speech) {
-  // Write history
-  HISTORY.innerHTML += `<li>${speech}</li>`;
+  // Write output
+  VIEWER.innerHTML = `<p>${speech}</p><div class="text-secondary">${VIEWER.innerHTML}</div>`;
   
   // Speech to text
   speechSynthesis.cancel();
@@ -100,6 +102,9 @@ function activate(element) {
 
 // Wait page loading
 window.addEventListener("load", (event) => {
+  // Display modal rules on load
+  new bootstrap.Modal(RULES).show();
+  
   readable = collect();
 
   // Function mappings for key actions
@@ -114,17 +119,29 @@ window.addEventListener("load", (event) => {
     " ": () => activate(readable[current]),
     Esc: () => activate(readable[current]),
     t: () => output(`Titre de la page : ${SCREEN.contentWindow.document.title}`),
-    1: () => list("headings"),
-    2: () => list("interactives"),
-    3: () => list("landmarks")
+    1: () => list("interactives"),
+    2: () => list("headings"),
+    3: () => list("landmarks"),
+    m: () => {
+      MASK.classList.replace('invisible', 'visible');
+      SCREEN.classList.replace('invisible', 'visible');
+    },
+    f: () => {
+      MASK.classList.replace('visible', 'invisible');
+      SCREEN.classList.replace('invisible', 'visible');
+    }
   };
 
   // Wait for a key press
   window.addEventListener("keydown", (event) => {
     event.preventDefault();
-
+    
     // Check if the key is mapped to an action
     if (keyActions[event.key]) keyActions[event.key](); // Trigger the mapped action
+  });
+  
+  MASK.addEventListener('mousemove', function(event) {
+    MASK.style.background = `linear-gradient(180deg, rgba(0,0,0,1) ${event.layerY - 20}px, rgba(0,0,0,0) ${event.layerY - 20}px ${event.layerY + 20}px, rgba(0,0,0,1) ${event.layerY + 20}px)`;
   });
   
   // Wait for a button click to trigger keyboard event
@@ -132,7 +149,7 @@ window.addEventListener("load", (event) => {
     button.addEventListener("click", (event) => {
       event.preventDefault();
       
-      const { key, keycode } = event.target.closest("button").dataset; // Get key and keyCode from the dataset
+      const { key, keycode, price } = event.target.closest("button").dataset; // Get key and keyCode from the dataset
 
       // Dispatch keyboard event if key and keyCode are valid
       if (key && keycode) {
@@ -144,6 +161,13 @@ window.addEventListener("load", (event) => {
           bubbles: true, // Allow event to bubble up
           cancelable: true // Make the event cancelable
         }));
+      }
+      
+      if (price) {
+        // Increase total cost
+        WALLET.textContent = parseInt(WALLET.textContent, 10) - parseInt(price, 10);
+        if (parseInt(WALLET.textContent, 10) < 100) WALLET.closest("div.alert").classList.replace('alert-info', 'alert-warning');
+        if (parseInt(WALLET.textContent, 10) < 0) WALLET.closest("div.alert").classList.replace('alert-warning', 'alert-danger');
       }
     });
   });

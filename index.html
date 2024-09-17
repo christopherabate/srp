@@ -12,15 +12,7 @@
     <header role="banner">
       <div class="container-fluid d-flex align-items-center justify-content-between py-1">
         <h1 class="lead m-0"><a class="text-body text-decoration-none" href="./"><span class="bi bi-eye-slash"></span> Screen Reader Puzzle</a></h1>
-        <nav class="dropdown">
-          <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" type="button" aria-expanded="false">
-            <span class="bi bi-list" aria-label="Screen Reader Puzzle"></span>
-          </button>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="./">Nouveau jeu</a></li>
-            <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#rules_modal">Règles du jeu</button></li>
-          </ul>
-        </nav>
+        <a class="btn btn-dark" href="./">Nouveau jeu</a>
       </div>
       <!-- Modal -->
       <div class="modal fade" id="rules_modal" tabindex="-1" aria-label="Règles du jeu" aria-hidden="true">
@@ -32,7 +24,8 @@
             </div>
             <div class="modal-body">
               <ul>
-                <li>L'objectif principal est d'effectuer l'action demandée en dépensant le moins d'énergie (<span class="bi bi-lightning"></span>) possible.</li>
+                <li>Vous disposer d'une réserve d'énergie initiale de 1000 <span class="bi bi-lightning"></span>.</li>
+                <li>L'objectif principal est d'effectuer l'action demandée en dépensant le moins d'énergie possible.</li>
               </ul>
             </div>
           </div>
@@ -44,117 +37,46 @@
         <div class="row">
           <div class="col-md-4 mb-3">
             <div class="card mb-3">
+              <form>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><span><span class="badge text-bg-warning">1 <span class="bi bi-lightning"></span></span><button class="btn btn-link stretched-link" data-key="t" data-keycode="84" data-price="1">Titre de la page</button></span><span><kbd>T</kbd></span></li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><span><span class="badge text-bg-warning">50 <span class="bi bi-lightning"></span></span><button class="btn btn-link stretched-link" data-key="3" data-keycode="51" data-price="50">Liste des régions</button></span><span><kbd>NVDA</kbd> + <kbd>F7</kbd></span></li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><span><span class="badge text-bg-warning">100 <span class="bi bi-lightning"></span></span><button class="btn btn-link stretched-link" data-key="1" data-keycode="49" data-price="100">Liste des éléments interactifs</button></span><span><kbd>NVDA</kbd> + <kbd>F7</kbd></span></li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><span><span class="badge text-bg-warning">100 <span class="bi bi-lightning"></span></span><button class="btn btn-link stretched-link" data-key="2" data-keycode="50" data-price="100">Liste des titres</button></span><span><kbd>NVDA</kbd> + <kbd>F7</kbd></span></li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><span><span class="badge text-bg-primary">2 <span class="bi bi-lightning"></span></span><button class="btn btn-link stretched-link" data-key="ArrowDown" data-keycode="40" data-price="2">Prochain élément</button></span><span><kbd>Flèche bas</kbd></span></li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><span><span class="badge text-bg-primary">2 <span class="bi bi-lightning"></span></span><button class="btn btn-link stretched-link" data-key="ArrowUp" data-keycode="38" data-price="2">Élément précédent</button></span><span><kbd>Flèche Haut</kbd></span></li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><span><span class="badge text-bg-primary">5 <span class="bi bi-lightning"></span></span><button class="btn btn-link stretched-link" data-key="Tab" data-keycode="9" data-price="5">Prochain élément interactif</button></span><span><kbd>Tab</kbd></span></li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><span><span class="badge text-bg-primary">10 <span class="bi bi-lightning"></span></span><button class="btn btn-link stretched-link" data-key="h" data-keycode="72" data-price="10">Prochain titre de niveau</button></span><span><kbd>H</kbd></span></li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><span><span class="badge text-bg-primary">5 <span class="bi bi-lightning"></span></span><button class="btn btn-link stretched-link" data-key="i" data-keycode="73" data-price="5">Prochain élément de liste</button></span><span><kbd>I</kbd></span></li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><span><span class="badge text-bg-primary">5 <span class="bi bi-lightning"></span></span><button class="btn btn-link stretched-link" data-key="d" data-keycode="68" data-price="5">Prochaine région</button></span><span><kbd>D</kbd></span></li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><span><span class="badge text-bg-light">1 <span class="bi bi-lightning"></span></span><button class="btn btn-link stretched-link" data-key="Enter" data-keycode="13" data-price="1">Activer l'élément</button></span><span><kbd>Entrée</kbd></span></li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><span><span class="badge text-bg-light">1 <span class="bi bi-lightning"></span></span><button class="btn btn-link stretched-link" data-key="Escape" data-keycode="27" data-price="1">Fermer</button></span><span><kbd>Échap</kbd></span></li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><span><span class="badge text-bg-light">1 <span class="bi bi-lightning"></span></span><button class="btn btn-link stretched-link" data-key="Space" data-keycode="32" data-price="1">Activer/désactiver la case à cocher</button></span><span><kbd>Espace</kbd></span></li>
+                </ul>
+              </form>
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <div class="card mb-3 h-100">
               <div class="card-header d-flex justify-content-between align-items-center">
                 <div>
                   <span class="bi bi-circle-fill text-danger"></span>
                   <span class="bi bi-circle-fill text-warning"></span>
                   <span class="bi bi-circle-fill text-success"></span>
                 </div>
-                <h2 class="h6 text-uppercase fw-bold m-0">Liste d'éléments</h2>
+                <h2 class="h6 text-uppercase fw-bold m-0">Speech viewer</h2>
                 <span class="bi bi-window"></span>
               </div>
-              <samp class="card-body text-bg-light">
-                <ol id="list" class="card-text">
-                </ol>
+              <samp class="card-body text-bg-light w-100 h-100 position-relative overflow-y-auto overflow-x-hidden py-0">
+                <div id="viewer" class="card-text w-100 h-100 position-absolute"></div>
               </samp>
-            </div>
-            <div class="card mb-3">
-              <form>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span><kbd>NVDA</kbd>+<kbd>t</kbd></span>
-                    Titre de la page
-                    <button class="btn btn-primary btn-sm unique-item stretched-link" type="submit" value="10" data-srp-item="voc_title" data-srp-speak="Titre de la page" disabled="">10 <span class="bi bi-lightning"></span></button>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span><kbd>NVDA</kbd>+<kbd>f7</kbd></span>
-                    Liste des titres
-                    <button class="btn btn-primary btn-sm unique-item stretched-link" type="submit" value="1000" data-srp-item="voc_titles" data-srp-speak="Liste des titres de niveaux" disabled="">1000 <span class="bi bi-lightning"></span></button>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span><kbd>NVDA</kbd>+<kbd>f7</kbd></span>
-                    Liste des liens
-                    <button class="btn btn-primary btn-sm unique-item stretched-link" type="submit" value="1000" data-srp-item="voc_links" data-srp-speak="Liste des liens" disabled="">1000 <span class="bi bi-lightning"></span></button>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span><kbd>NVDA</kbd>+<kbd>f7</kbd></span>
-                    Liste des champs de formulaires
-                    <button class="btn btn-primary btn-sm unique-item stretched-link" type="submit" value="1000" data-srp-item="voc_forms" data-srp-speak="Liste des champs de formulaires">1000 <span class="bi bi-lightning"></span></button>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span><kbd>NVDA</kbd>+<kbd>f7</kbd></span>
-                    Liste des régions
-                    <button class="btn btn-primary btn-sm unique-item stretched-link" type="submit" value="500" data-srp-item="voc_regions" data-srp-speak="Liste des régions">500 <span class="bi bi-lightning"></span></button>
-                  </li>
-                </ul>
-              </form>
             </div>
           </div>
           <div class="col-md-4 mb-3">
-            <div class="card mb-3">
-              <div class="card-header d-flex justify-content-between align-items-center">
-                <div>
-                  <span class="bi bi-circle-fill text-danger"></span>
-                  <span class="bi bi-circle-fill text-warning"></span>
-                  <span class="bi bi-circle-fill text-success"></span>
-                </div>
-                <h2 class="h6 text-uppercase fw-bold m-0">Historique</h2>
-                <span class="bi bi-window"></span>
-              </div>
-              <samp class="card-body text-bg-light">
-                <ul id="history" class="card-text">
-                </ul>
-              </samp>
+            <div class="alert alert-info text-center" role="alert">
+              <h2 class="h6 m-0">Énergie restante&nbsp;: <span id="wallet">1000</span> <span class="bi bi-lightning"></span></h2>
             </div>
-            <div class="card mb-3">
-              <form>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span><kbd>entrée</kbd></span>
-                    Activer élément focusé
-                    <button class="btn btn-primary btn-sm stretched-link" type="submit" value="10" data-srp-item="Activer élément focusé" data-srp-speak="Entrée">10 <span class="bi bi-lightning"></span></button>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span><kbd>espace</kbd></span>
-                    Activer/désactiver case à cocher
-                    <button class="btn btn-primary btn-sm stretched-link" type="submit" value="10" data-srp-item="Activer/désactiver case à cocher" data-srp-speak="Espace">10 <span class="bi bi-lightning"></span></button>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span><kbd>échap</kbd></span>
-                    Fermer
-                    <button class="btn btn-primary btn-sm stretched-link" type="submit" value="10" data-srp-item="Fermer" data-srp-speak="Échap">10 <span class="bi bi-lightning"></span></button>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span><kbd>Tab</kbd></span>
-                    Prochain élément focusable
-                    <button class="btn btn-primary btn-sm stretched-link" type="submit" value="200" data-srp-item="Prochain élément focusable" data-srp-speak="Tab">20 <span class="bi bi-lightning"></span></button>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span><kbd>flèche bas</kbd></span>
-                    Prochain élément texte
-                    <button class="btn btn-primary btn-sm stretched-link" type="submit" value="20" data-srp-item="Prochain élément texte" data-srp-speak="Flèche bas">20 <span class="bi bi-lightning"></span></button>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span><kbd>i</kbd></span>
-                    Prochain élément de liste
-                    <button class="btn btn-primary btn-sm stretched-link" type="submit" value="20" data-srp-item="Prochain élément de liste" data-srp-speak="i">20 <span class="bi bi-lightning"></span></button>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span><kbd>h</kbd></span>
-                    Prochain titre de niveau
-                    <button class="btn btn-primary btn-sm stretched-link" type="submit" value="100" data-srp-item="Prochain titre de niveau" data-srp-speak="h">100 <span class="bi bi-lightning"></span></button>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span><kbd>d</kbd></span>
-                    Prochaine région
-                    <button class="btn btn-primary btn-sm stretched-link" type="submit" value="100" data-srp-item="Prochaine région" data-srp-speak="d">100 <span class="bi bi-lightning"></span></button>
-                  </li>
-                </ul>
-              </form>
-            </div>
-          </div>
-          <div class="col-md-4 mb-3">
-            <div class="card mb-3">
+            <div class="card mb-3 h-50">
               <div class="card-header d-flex justify-content-between align-items-center">
                 <div>
                   <span class="bi bi-circle-fill text-danger"></span>
@@ -164,28 +86,18 @@
                 <h2 class="h6 text-uppercase fw-bold m-0">Puzzle</h2>
                 <span class="bi bi-window"></span>
               </div>
-              <div class="card-body d-flex overflow-hidden p-0">
-                <div class="h-100 w-100 position-relative">
-                  <div id="mask" class="invisible">
-                    <div class="w-100 position-absolute bg-dark top-0" style="height:47.5%;"></div>
-                    <div class="w-100 position-absolute bg-dark bottom-0" style="height:47.5%;"></div>
-                  </div>
-                  <div id="page" class="h-100 w-100 position-absolute bg-light visible"></div>
-                  <iframe id="screen" title="Titre de la page" class="flex-grow-1 h-100 w-100 bg-white" src="screen.html"></iframe>
+              <div class="card-body p-0">
+                <div class="w-100 h-100 position-relative">
+                  <div id="mask" class="invisible w-100 h-100 position-absolute" style="background: black; cursor: none;"></div>
+                  <iframe id="screen" title="Titre de la page" class="flex-grow-1 h-100 w-100 invisible" src="screen.html"></iframe>
                 </div>
               </div>
             </div>
             <div class="card mb-3">
               <form>
                 <ul class="list-group list-group-flush">
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Masque de lecture
-                    <button class="btn btn-primary btn-sm unique-item stretched-link" type="submit" value="2000" data-srp-item="viz_mask">2000 <span class="bi bi-lightning"></span></button>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Page complète
-                    <button class="btn btn-primary btn-sm unique-item stretched-link" type="submit" value="10000" data-srp-item="viz_page">10000 <span class="bi bi-lightning"></span></button>
-                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><span><span class="badge text-bg-danger">200 <span class="bi bi-lightning"></span></span><button class="btn btn-link stretched-link" data-key="m" data-keycode="77" data-price="200">Masque de lecture</button></span><span><kbd>M</kbd></span></li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center"><span><span class="badge text-bg-danger">1000 <span class="bi bi-lightning"></span></span><button class="btn btn-link stretched-link" data-key="f" data-keycode="70" data-price="1000">Afficher l'écran</button></span><span><kbd>F</kbd></span></li>
                 </ul>
               </form>
             </div>
@@ -193,27 +105,8 @@
       </div>
     </main>
     <footer>
-      <div class="container-fluid d-flex align-items-center justify-content-between py-1">
-        <div class="alert alert-info d-flex align-items-center my-2" role="alert">
-          <span class="bi bi-info-circle-fill flex-shrink-0 me-2" aria-label="Vocalisation"></span>
-          <div>
-            <h2 class="h6 m-0">Dépense totale&nbsp;: <span id="total_cost">0</span> <span class="bi bi-lightning"></span></h2>
-          </div>
-        </div>
-        <p><a href="#">Github link</a> &copy; 2024</p>
-        <button class="btn btn-link" data-key="ArrowDown" data-keycode="40"><kbd>ArrowDown</kbd></button>
-        <button class="btn btn-link" data-key="ArrowUp" data-keycode="38"><kbd>ArrowUp</kbd></button>
-        <button class="btn btn-link" data-key="Tab" data-keycode="9"><kbd>Tab</kbd></button>
-        <button class="btn btn-link" data-key="Enter" data-keycode="13"><kbd>Enter</kbd></button>
-        <button class="btn btn-link" data-key="Esc" data-keycode="27"><kbd>Esc</kbd></button>
-        <button class="btn btn-link" data-key="Space" data-keycode="32"><kbd>Space</kbd></button>
-        <button class="btn btn-link" data-key="h" data-keycode="72"><kbd>H</kbd></button>
-        <button class="btn btn-link" data-key="i" data-keycode="73"><kbd>I</kbd></button>
-        <button class="btn btn-link" data-key="d" data-keycode="68"><kbd>D</kbd></button>
-        <button class="btn btn-link" data-key="t" data-keycode="84"><kbd>T</kbd></button>
-        <button class="btn btn-link" data-key="1" data-keycode="49"><kbd>1</kbd></button>
-        <button class="btn btn-link" data-key="2" data-keycode="50"><kbd>2</kbd></button>
-        <button class="btn btn-link" data-key="3" data-keycode="51"><kbd>3</kbd></button>
+      <div class="container-fluid py-1">
+        <a class="icon-link" href="https://github.com/christopherabate/srp"><span class="bi bi-github h-auto"></span> Github</a>
       </div>
     </footer>
   </body>
