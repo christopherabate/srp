@@ -3,6 +3,7 @@ import { ScreenReader } from './screenreader.js';
 import { accName } from './accname.js';
 
 const SCREEN = document.querySelector("#screen");
+const CONTROLS = document.querySelector("#controls");
 const MASK = document.querySelector("#mask");
 const VIEWER = document.querySelector("#viewer");
 const LIST = document.querySelector("#list");
@@ -29,9 +30,9 @@ window.addEventListener("load", () => {
     " ": () => VIEWER.innerHTML = `<p>${sr.activate().speak({ wrapper: accName }).substring(0, 100)}</p><div class="text-secondary">${VIEWER.innerHTML}</div>`,
     escape: () => VIEWER.innerHTML = `<p>${sr.activate().speak({ wrapper: accName }).substring(0, 100)}</p><div class="text-secondary">${VIEWER.innerHTML}</div>`,
     t: () => VIEWER.innerHTML = `<p>Titre de la page : ${SCREEN.contentWindow.document.title}</p><div class="text-secondary">${VIEWER.innerHTML}</div>`,
-    1: () => LIST.innerHTML = `<h3 class="h6 text-uppercase fw-bold">${sr.collect('interactives').length} éléments interactifs :</h3><ol>${sr.collect('interactives').map(interactive => [`<li><button class="btn btn-dark" data-index="${sr.readable.indexOf(sr.readable.find((element) => element === interactive))}">${sr.speak({ wrapper: accName, element: interactive }).substring(0, 100)}</button></li>`]).join('')}</ol>`,
-    2: () => LIST.innerHTML = `<h3 class="h6 text-uppercase fw-bold">${sr.collect('headings').length} titres :</h3><ol>${sr.collect('headings').map(heading => [`<li><button class="btn btn-dark" data-index="${sr.readable.indexOf(sr.readable.find((element) => element === heading))}">${sr.speak({ wrapper: accName, element: heading }).substring(0, 100)}</button></li>`]).join('')}</ol>`,
-    3: () => LIST.innerHTML = `<h3 class="h6 text-uppercase fw-bold">${sr.collect('landmarks').length} régions :</h3><ol>${sr.collect('landmarks').map(landmark => [`<li><button class="btn btn-dark" data-index="${sr.readable.indexOf(sr.readable.find((element) => element === landmark))}">${sr.speak({ wrapper: accName, element: landmark }).substring(0, 100)}</button></li>`]).join('')}</ol>`,
+    1: () => LIST.innerHTML = `<h3 class="h6">${sr.collect('interactives').length} éléments interactifs :</h3><div class="list-group list-group-flush list-group-numbered">${sr.collect('interactives').map(interactive => [`<button type="button" class="list-group-item list-group-item-action" data-index="${sr.readable.indexOf(sr.readable.find((element) => element === interactive))}">${sr.speak({ wrapper: accName, element: interactive }).substring(0, 100)}</button>`]).join('')}</div>`,
+    2: () => LIST.innerHTML = `<h3 class="h6">${sr.collect('headings').length} titres :</h3><div class="list-group list-group-flush list-group-numbered">${sr.collect('headings').map(heading => [`<button type="button" class="list-group-item list-group-item-action" data-index="${sr.readable.indexOf(sr.readable.find((element) => element === heading))}">${sr.speak({ wrapper: accName, element: heading }).substring(0, 100)}</button>`]).join('')}</div>`,
+    3: () => LIST.innerHTML = `<h3 class="h6">${sr.collect('landmarks').length} régions :</h3><div class="list-group list-group-flush list-group-numbered">${sr.collect('landmarks').map(landmark => [`<button type="button" class="list-group-item list-group-item-action" data-index="${sr.readable.indexOf(sr.readable.find((element) => element === landmark))}">${sr.speak({ wrapper: accName, element: landmark }).substring(0, 100)}</button>`]).join('')}</div>`,
     m: () => {
       MASK.addEventListener('mousemove', (event) => {
         MASK.style.background = `linear-gradient(180deg, rgba(0,0,0,1) ${event.layerY - 20}px, rgba(0,0,0,0) ${event.layerY - 20}px ${event.layerY + 20}px, rgba(0,0,0,1) ${event.layerY + 20}px)`;
@@ -55,7 +56,7 @@ window.addEventListener("load", () => {
   });
   
   // Wait for a button click to trigger control event
-  document.querySelectorAll(".controls button").forEach((button) => {
+  CONTROLS.querySelectorAll("button").forEach((button) => {
     button.addEventListener("click", (event) => {
       event.preventDefault();
       
