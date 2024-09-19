@@ -11,6 +11,9 @@ const RULES = document.querySelector("#rules_modal");
 
 // Wait page loading
 window.addEventListener("load", () => {
+  // Display modal rules on load
+  new bootstrap.Modal(RULES).show();
+  
   // Init screen reader
   let sr = new ScreenReader(SCREEN, ELEMENTS);
   
