@@ -1,5 +1,5 @@
-import { ScreenReader } from './screenreader.js';
 import { ELEMENTS } from './elements.js';
+import { ScreenReader } from './screenreader.js';
 import { accName } from './accname.js';
 
 const SCREEN = document.querySelector("#screen");
@@ -44,13 +44,13 @@ window.addEventListener("load", () => {
       SCREEN.classList.replace('invisible', 'visible');
     }
   };
-
-  // Wait for a key press
-  window.addEventListener("keydown", (event) => {
-    // Check if the key is mapped to an action
-    if (keyActions[event.key.toLowerCase()]) {
+  
+  // Wait for a button click to trigger action event
+  LIST.addEventListener("click", (event) => {
+    if (event.target.matches("button")) {
       event.preventDefault();
-      keyActions[event.key.toLowerCase()](event.shiftKey); // Trigger the mapped action and pass the shiftKey state to the action
+      
+      VIEWER.innerHTML = `<p>${sr.setCurrent(event.target.closest("button").dataset.index).speak({ wrapper: accName }).substring(0, 100)}</p><div class="text-secondary">${VIEWER.innerHTML}</div>`;
     }
   });
   
@@ -81,13 +81,26 @@ window.addEventListener("load", () => {
       }
     });
   });
-  
-  // Wait for a button click to trigger action event
-  LIST.addEventListener("click", (event) => {
-    if (event.target.matches("button")) {
+
+  // Wait for a key press
+  window.addEventListener("keydown", (event) => {
+    // Check if the key is mapped to an action
+    if (keyActions[event.key.toLowerCase()]) {
       event.preventDefault();
-      
-      VIEWER.innerHTML = `<p>${sr.setCurrent(event.target.closest("button").dataset.index).speak({ wrapper: accName }).substring(0, 100)}</p><div class="text-secondary">${VIEWER.innerHTML}</div>`;
+      keyActions[event.key.toLowerCase()](event.shiftKey); // Trigger the mapped action and pass the shiftKey state to the action
     }
   });
+  
+  // Callback observer for text to speech
+  const observer = new MutationObserver((mutationsList) => {
+    mutationsList.forEach((mutation) => {
+      // Text to speech
+      speechSynthesis.cancel();
+      speechSynthesis.speak(new SpeechSynthesisUtterance(mutation.target.firstChild.textContent));
+    });
+  });
+
+  // Observed elements
+  observer.observe(VIEWER, { childList: true });
+  observer.observe(LIST, { childList: true });
 });
