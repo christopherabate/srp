@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="fr" class="h-100">
+<html lang="fr">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,7 +8,7 @@
     <link href="assets/css/srp.css" rel="stylesheet">
     <title>Screen Reader Puzzle</title>
   </head>
-  <body class="h-100">
+  <body>
     <!-- Modal -->
     <div class="modal fade" id="rules_modal" tabindex="-1" aria-label="Règles du jeu" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
@@ -26,12 +26,12 @@
         </div>
       </div>
     </div>
-    <div class="container h-100 d-flex flex-column">
+    <div class="container">
       <header role="banner" class="d-flex align-items-center justify-content-between my-3">
         <h1 class="lead m-0"><a class="text-body text-decoration-none" href="./"><i class="bi bi-eye-slash" aria-hidden="true"></i> Screen Reader Puzzle</a></h1>
         <nav role="navigation"><a class="icon-link" href="./"><i class="bi bi-arrow-counterclockwise h-auto" aria-hidden="true"></i> Recommencer</a></nav>
       </header>
-      <main role="main" class="flex-fill h-100 d-flex flex-column">
+      <main role="main">
         <div class="alert alert-info text-center" role="alert">
           <h2 class="h6 m-0">Énergie restante&nbsp;: <span id="wallet">1000</span> <span class="bi bi-lightning"></span></h2>
         </div>
@@ -66,17 +66,17 @@
             <div id="list"><p>Aucune liste</p></div>
           </div>
         </div>
-        <div class="row flex-fill my-3">
-          <div class="col d-flex flex-column">
+        <div class="row my-3">
+          <div class="col">
             <h2 class="h6 text-uppercase fw-bold">Visionneuse de paroles</h2>
-            <div class="card flex-fill">
-              <div id="viewer" class="card-body">
-              </div>
+            <div class="h-100 position-relative">
+              <i class="bi bi-caret-right-fill position-absolute top-0 start-0" aria-hidden="true"></i>
+              <div id="viewer" class="ms-4"></div>
             </div>
           </div>
-          <div class="col d-flex flex-column">
+          <div class="col">
             <h2 class="h6 text-uppercase fw-bold">Puzzle</h2>
-            <div class="card flex-fill">
+            <div class="card h-100">
               <div class="card-body p-0">
                 <div class="w-100 h-100 position-relative">
                   <div id="mask" class="invisible w-100 h-100 position-absolute" style="background: black; cursor: none;"></div>
