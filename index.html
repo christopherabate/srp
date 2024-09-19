@@ -37,7 +37,7 @@
         <div class="row">
           <div class="col-md-4 mb-3">
             <div class="card mb-3">
-              <form>
+              <form class="controls">
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item d-flex justify-content-between align-items-center"><span><span class="badge text-bg-warning">1 <span class="bi bi-lightning"></span></span><button class="btn btn-link stretched-link" data-key="t" data-keycode="84" data-price="1">Titre de la page</button></span><span><kbd>T</kbd></span></li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><span><span class="badge text-bg-warning">100 <span class="bi bi-lightning"></span></span><button class="btn btn-link stretched-link" data-key="1" data-keycode="49" data-price="100">Liste des éléments interactifs</button></span><span><kbd>NVDA</kbd> + <kbd>F7</kbd></span></li>
@@ -77,7 +77,9 @@
               <h2 class="h6 m-0">Énergie restante&nbsp;: <span id="wallet">1000</span> <span class="bi bi-lightning"></span></h2>
             </div>
             <div class="card mb-3">
-              <div id="list"></div>
+              <form class="actions">
+                <div id="list" class="card-body"></div>
+              </form>
             </div>
             <div class="card mb-3 h-50">
               <div class="card-header d-flex justify-content-between align-items-center">
@@ -97,7 +99,7 @@
               </div>
             </div>
             <div class="card mb-3">
-              <form>
+              <form class="controls">
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item d-flex justify-content-between align-items-center"><span><span class="badge text-bg-danger">200 <span class="bi bi-lightning"></span></span><button class="btn btn-link stretched-link" data-key="m" data-keycode="77" data-price="200">Masque de lecture</button></span><span><kbd>M</kbd></span></li>
                   <li class="list-group-item d-flex justify-content-between align-items-center"><span><span class="badge text-bg-danger">1000 <span class="bi bi-lightning"></span></span><button class="btn btn-link stretched-link" data-key="f" data-keycode="70" data-price="1000">Afficher l'écran</button></span><span><kbd>F</kbd></span></li>

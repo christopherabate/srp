@@ -7,6 +7,12 @@ export class ScreenReader {
     this.current = 0;
   }
   
+  // Setter for current index
+  setCurrent(index) {
+    this.current = parseInt(index);
+    return this;
+  }
+  
   // Collect elements from all elements or a subset
   collect(subset = "") {
     return [...this.screen.contentWindow.document.querySelectorAll(Object.keys(subset ? this.elements[subset] : Object.assign({}, ...Object.values(this.elements))).toString())]
@@ -36,25 +42,18 @@ export class ScreenReader {
     return this;
   }
   
-  // Find element in readable, make it current and return instance
-  find(target) {
-    //find target in this.readable
-    let foundElement = this.readable.find((element) => element === target);
-    //this.current = this.readable INDEX
-    this.current = foundElement ? this.readable.indexOf(foundElement) : 0;
-    return this;
-  }
-  
   // Return current element name
-  speak(wrapper) {
-    return `${Object.assign({}, ...Object.values(this.elements))?.[this.readable[this.current].tagName]} "${(wrapper ? wrapper(this.readable[this.current]) : this.readable[this.current].textContent?.trim()) || 'vide'}"`
-    + (this.readable[this.current].selectedOptions ? ` ${[...this.readable[this.current].selectedOptions].map(option => option.label).join(', ')}` : "")
-    + (this.readable[this.current].value ? ` : ${this.readable[this.current].value.trim()}` : "")
-    + (this.readable[this.current].src && !this.readable[this.current].hasAttribute("alt") ? ` (${this.readable[this.current].src})` : "")
-    + (this.readable[this.current].getAttribute("placeholder") ? ` (${this.readable[this.current].getAttribute("placeholder")})` : "")
-    + (this.readable[this.current].required ? " (Obligatoire)" : "")
-    + (this.readable[this.current].checked ? " (Coché)" : "")
-    + (this.readable[this.current].selected ? " (Sélectionné)" : "")
-    + (this.readable[this.current].disabled ? " (Désactivé)" : "")
+  speak(options = {}) {
+    const { wrapper, element = this.readable[this.current] } = options;
+    
+    return `${Object.assign({}, ...Object.values(this.elements))?.[element.tagName]} "${(wrapper ? wrapper(element) : element.textContent?.trim()) || 'vide'}"`
+    + (element.selectedOptions ? ` ${[...element.selectedOptions].map(option => option.label).join(', ')}` : "")
+    + (element.value ? ` : ${element.value.trim()}` : "")
+    + (element.src && !element.hasAttribute("alt") ? ` (${element.src})` : "")
+    + (element.getAttribute("placeholder") ? ` (${element.getAttribute("placeholder")})` : "")
+    + (element.required ? " (Obligatoire)" : "")
+    + (element.checked ? " (Coché)" : "")
+    + (element.selected ? " (Sélectionné)" : "")
+    + (element.disabled ? " (Désactivé)" : "")
   }
 }
