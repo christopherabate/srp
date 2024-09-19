@@ -78,7 +78,7 @@ window.addEventListener("load", () => {
         // Increase total cost
         WALLET.textContent = parseInt(WALLET.textContent, 10) - parseInt(price, 10);
         if (parseInt(WALLET.textContent, 10) < 100) WALLET.closest("div.alert").classList.replace('alert-info', 'alert-warning');
-        if (parseInt(WALLET.textContent, 10) < 0) WALLET.closest("div.alert").classList.replace('alert-warning', 'alert-danger');
+        if (parseInt(WALLET.textContent, 10) <= 0) WALLET.closest("div.alert").classList.replace('alert-warning', 'alert-danger');
       }
     });
   });
