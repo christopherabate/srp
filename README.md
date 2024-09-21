@@ -29,6 +29,10 @@ reader.activate();
 
 ### Constructor
 
+```js
+const screen = window;
+const elements = { 'forms': { 'input': 'Input Field' } };
+const reader = new ScreenReader(screen, elements);
 ```
 
 | Parameter | Type   | Description                                       |
