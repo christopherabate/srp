@@ -2,6 +2,7 @@ import { ELEMENTS } from './elements.js';
 import { ScreenReader } from './screenreader.js';
 import { accName } from './accname.js';
 
+// DOM elements
 const SCREEN = document.querySelector("#screen");
 const CONTROLS = document.querySelector("#controls");
 const MASK = document.querySelector("#mask");
@@ -10,15 +11,15 @@ const LIST = document.querySelector("#list");
 const WALLET = document.querySelector("#wallet");
 const RULES = document.querySelector("#rules_modal");
 
-// Wait page loading
+// On page load
 window.addEventListener("load", () => {
-  // Display modal rules on load
+  // Display modal with rules on page load
   new bootstrap.Modal(RULES).show();
   
-  // Init screen reader
+  // Initialize screen reader
   let sr = new ScreenReader(SCREEN, ELEMENTS);
   
-  // Function mappings for key actions
+  // Key actions mapping
   const keyActions = {
     arrowdown: () => VIEWER.innerHTML = `<p>${sr.move().speak({ wrapper: accName }).substring(0, 100)}</p><div class="text-secondary">${VIEWER.innerHTML}</div>`,
     arrowup: () => VIEWER.innerHTML = `<p>${sr.move({ reverse: true }).speak({ wrapper: accName }).substring(0, 100)}</p><div class="text-secondary">${VIEWER.innerHTML}</div>`,
@@ -46,16 +47,15 @@ window.addEventListener("load", () => {
     }
   };
   
-  // Wait for a button click to trigger action event
+  // Event listener for button click in LIST
   LIST.addEventListener("click", (event) => {
     if (event.target.matches("button")) {
       event.preventDefault();
-      
       VIEWER.innerHTML = `<p>${sr.setCurrent(event.target.closest("button").dataset.index).speak({ wrapper: accName }).substring(0, 100)}</p><div class="text-secondary">${VIEWER.innerHTML}</div>`;
     }
   });
   
-  // Wait for a button click to trigger control event
+  // Event listener for button click in CONTROLS
   CONTROLS.querySelectorAll("button").forEach((button) => {
     button.addEventListener("click", (event) => {
       event.preventDefault();
@@ -74,11 +74,14 @@ window.addEventListener("load", () => {
         }));
       }
       
+      // Update wallet if price is present
       if (price) {
-        // Increase total cost
-        WALLET.textContent = parseInt(WALLET.textContent, 10) - parseInt(price, 10);
-        if (parseInt(WALLET.textContent, 10) < 100) WALLET.closest("div.alert").classList.replace('alert-info', 'alert-warning');
-        if (parseInt(WALLET.textContent, 10) <= 0) WALLET.closest("div.alert").classList.replace('alert-warning', 'alert-danger');
+        const newBalance = parseInt(wallet.textContent, 10) - parseInt(price, 10);
+        wallet.textContent = newBalance;
+        
+        const walletAlert = wallet.closest("div.alert");
+        if (newBalance < 100) walletAlert.classList.replace('alert-info', 'alert-warning');
+        if (newBalance <= 0) walletAlert.classList.replace('alert-warning', 'alert-danger');
       }
     });
   });
@@ -92,16 +95,15 @@ window.addEventListener("load", () => {
     }
   });
   
-  // Callback observer for text to speech
+  // Mutation observer to trigger text-to-speech when content changes
   const observer = new MutationObserver((mutationsList) => {
     mutationsList.forEach((mutation) => {
-      // Text to speech
       speechSynthesis.cancel();
       speechSynthesis.speak(new SpeechSynthesisUtterance(mutation.target.firstChild.textContent));
     });
   });
 
-  // Observed elements
+  // Observe changes in VIEWER and LIST elements
   observer.observe(VIEWER, { childList: true });
   observer.observe(LIST, { childList: true });
 });

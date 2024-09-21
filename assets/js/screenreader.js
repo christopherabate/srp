@@ -1,5 +1,10 @@
 export class ScreenReader {
-  // Collect all elements and set the first one as current
+  /**
+   * Initializes the screen reader by collecting all elements and 
+   * setting the first one as the current element.
+   * @param {object} screen - The screen object.
+   * @param {object} elements - An object defining elements and their descriptions.
+   */
   constructor(screen, elements = { 'html': { '*': "HTML Tag" } }) {
     this.screen = screen;
     this.elements = elements;
@@ -7,57 +12,109 @@ export class ScreenReader {
     this.current = 0;
   }
   
-  // Setter for current index
+  /**
+   * Sets the current index of the readable elements.
+   * @param {number} index - The new index to set.
+   * @returns {ScreenReader} - The current instance for chaining.
+   */
   setCurrent(index) {
-    this.current = parseInt(index);
+    this.current = parseInt(index, 10);
     return this;
   }
   
-  // Collect elements from all elements or a subset
+  /**
+   * Collects the elements from the DOM, based on the defined list of elements.
+   * Filters out hidden or aria-hidden elements.
+   * @param {string} [subset=''] - A subset of elements to collect, if specified.
+   * @returns {HTMLElement[]} - A list of readable elements.
+   */
   collect(subset = '') {
-    return [...this.screen.contentWindow.document.querySelectorAll(Object.keys(subset ? this.elements[subset] : Object.assign({}, ...Object.values(this.elements))).toString())]
-    .filter(element => {
-      while (element) {
-        if (getComputedStyle(element).visibility === 'hidden' || 
-          getComputedStyle(element).display === 'none' || 
-          element.closest('[aria-hidden="true"]')) {
-          return false;
+    const selectors = subset
+      ? this.elements[subset]
+      : Object.assign({}, ...Object.values(this.elements));
+    
+    // Cache the computed styles only once per element
+    return [...this.screen.contentWindow.document.querySelectorAll(Object.keys(selectors).toString())]
+      .filter(element => {
+        let currentElement = element;
+        let computedStyle;
+
+        while (currentElement) {
+          computedStyle = getComputedStyle(currentElement);
+          if (computedStyle.visibility === 'hidden' || computedStyle.display === 'none' || currentElement.closest('[aria-hidden="true"]')) {
+            return false;
+          }
+          currentElement = currentElement.parentElement;
         }
-        element = element.parentElement;
-      }
-      return true;
-    });
+        return true;
+      });
   }
   
-  // Update then return instance 
+  /**
+   * Moves to the next or previous matching element.
+   * Updates the current index accordingly.
+   * @param {object} options - Options for movement.
+   * @param {string} [options.list=''] - A subset of elements to consider.
+   * @param {boolean} [options.reverse=false] - Whether to move backwards.
+   * @returns {ScreenReader} - The current instance for chaining.
+   */
   move({ list = '', reverse = false } = {}) {
-    // Find the next matching element after/before the current index
-    const nextElement = (reverse ? this.readable.slice(0, this.current) : this.readable.slice(this.current + 1))[reverse ? 'findLast' : 'find']((element) => element.matches(Object.keys(list ? this.elements[list] : Object.assign({}, ...Object.values(this.elements))).toString()));
-    this.current = nextElement ? this.readable.indexOf(nextElement) : this.readable[reverse ? 'findLastIndex' : 'findIndex']((element) => element.matches(Object.keys(list ? this.elements[list] : Object.assign({}, ...Object.values(this.elements))).toString()));
+    const listSelector = list
+      ? this.elements[list]
+      : Object.assign({}, ...Object.values(this.elements));
+
+    const nextElement = (reverse ? this.readable.slice(0, this.current) : this.readable.slice(this.current + 1))[reverse ? 'findLast' : 'find'](
+      element => element.matches(Object.keys(listSelector).toString())
+    );
+    
+    this.current = nextElement
+      ? this.readable.indexOf(nextElement)
+      : this.readable[reverse ? 'findLastIndex' : 'findIndex'](
+        element => element.matches(Object.keys(listSelector).toString())
+      );
+      
     return this;
   }
   
-  // Activate current element then update readable and return instance
+  /**
+   * Activates the current element by triggering a click.
+   * Updates the readable list and sets the current index to the clicked element.
+   * @returns {ScreenReader} - The current instance for chaining.
+   */
   activate() {
     const currentElement = this.readable[this.current];
+    
     if (currentElement) {
       currentElement.click();
       this.readable = this.collect();
       this.current = this.readable.indexOf(currentElement) || 0;
     }
+    
     return this;
   }
   
-  // Return current element name
+  /**
+   * Generates a string describing the current element, including its tag name, text, 
+   * attributes, and state (e.g., required, checked).
+   * @param {object} options - Options for speaking.
+   * @param {function} [options.wrapper] - A wrapper function to format the element's text.
+   * @param {HTMLElement} [options.element=this.readable[this.current]] - The element to describe.
+   * @returns {string} - A description of the current element.
+   */
   speak({ wrapper, element = this.readable[this.current] } = {}) {
-    return `${Object.assign({}, ...Object.values(this.elements))?.[element.tagName]} "${(wrapper ? wrapper(element) : element.textContent?.trim()) || 'vide'}"`
-    + (element.selectedOptions ? ` ${[...element.selectedOptions].map(option => option.label).join(', ')}` : '')
-    + (element.value ? ` : ${element.value.trim()}` : '')
-    + (element.hasAttribute('alt') ? (element.getAttribute('alt') ? '' : ' Décorative') : (element.getAttribute('src') ? ` ${element.getAttribute('src').split('/').pop()}` : ''))
-    + (element.getAttribute('placeholder') ? ` (${element.getAttribute('placeholder')})` : '')
-    + (element.required ? ' (Obligatoire)' : '')
-    + (element.checked ? ' (Coché)' : '')
-    + (element.selected ? ' (Sélectionné)' : '')
-    + (element.disabled ? ' (Désactivé)' : '');
+    const speech = [
+      Object.assign({}, ...Object.values(this.elements))[element.tagName] || '',
+      (wrapper ? wrapper(element) : element.textContent?.trim()) || '(empty)',
+      element.selectedOptions ? [...element.selectedOptions].map(option => option.label).join(', ') : '',
+      element.value ? element.value.trim() : '',
+      element.hasAttribute('alt') ? (element.getAttribute('alt') ? '' : 'decorative') : (element.getAttribute('src') ? element.getAttribute('src').split('/').pop() : ''),
+      element.getAttribute('placeholder') ? element.getAttribute('placeholder') : '',
+      element.required ? '(required)' : '',
+      element.checked ? '(checked)' : '',
+      element.selected ? '(selected)' : '',
+      element.disabled ? '(disabled)' : ''
+    ];
+
+    return speech.filter(Boolean).join(' ');
   }
 }
