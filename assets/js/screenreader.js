@@ -1,4 +1,4 @@
-export class ScreenReader {
+export class ScreenReader extends EventTarget {
   /**
    * Initializes the screen reader by collecting all elements and 
    * setting the first one as the current element.
@@ -6,10 +6,22 @@ export class ScreenReader {
    * @param {object} elements - An object defining elements and their descriptions.
    */
   constructor(screen, elements = { 'html': { '*': "HTML Tag" } }) {
+    super(); // Call EventTarget's constructor
     this.screen = screen;
     this.elements = elements;
     this.current = 0;
     this.readable = this.collect();
+  }
+  
+  /**
+   * Dispatches a custom event on the ScreenReader instance with the given name and details.
+   *
+   * @param {string} eventName - The name of the event.
+   * @param {Object} [detail] - Additional data to include with the event.
+   */
+  dispatchEvent(eventName, detail) {
+    const event = new CustomEvent(eventName, { detail });
+    super.dispatchEvent(event);  // Dispatch event using EventTarget's dispatchEvent method
   }
   
   /**
@@ -19,6 +31,7 @@ export class ScreenReader {
    */
   setCurrent(index) {
     this.current = parseInt(index, 10);
+    this.dispatchEvent('change', this);
     return this;
   }
   
@@ -30,10 +43,6 @@ export class ScreenReader {
    * @returns {HTMLElement[]} - A list of readable elements.
    */
   collect(subset = '') {
-    const selectors = subset
-      ? this.elements[subset]
-      : Object.assign({}, ...Object.values(this.elements));
-      
     const isVisible = (element) => {
       if (!element) return true;
       const computedStyle = getComputedStyle(element);
@@ -43,17 +52,17 @@ export class ScreenReader {
       return isVisible(element.parentElement);
     };
     
-    const elements = [...this.screen.contentWindow.document.querySelectorAll(Object.keys(selectors).toString())]
+    const elements = [...this.screen.contentWindow.document.querySelectorAll(Object.keys(Object.assign({}, ...Object.values(this.elements))).toString())]
       .filter(isVisible);
     
-    this.current = (index => index !== -1 ? index : null)(elements.findIndex(element => element.getAttribute('role') === 'alert'))
+    this.setCurrent((index => index !== -1 ? index : null)(elements.findIndex(element => element.getAttribute('role') === 'alert'))
       ?? (index => index !== -1 ? index : null)(elements.findIndex(element => element.hasAttribute('autofocus')))
       ?? (index => index !== -1 ? index : null)(elements.findIndex(element => element.getAttribute('role') === 'status'))
       ?? (index => index !== -1 ? index : null)(elements.findIndex(element => element.getAttribute('role') === 'log'))
-      ?? this.current;
-    
-    console.log(this);
-    return elements;
+      ?? this.current);
+        
+    return [...this.screen.contentWindow.document.querySelectorAll(Object.keys(subset ? this.elements[subset] : Object.assign({}, ...Object.values(this.elements))).toString())]
+      .filter(isVisible);
   }
   
   /**
@@ -73,12 +82,12 @@ export class ScreenReader {
       element => element.matches(Object.keys(listSelector).toString())
     );
     
-    this.current = nextElement
+    this.setCurrent(nextElement
       ? this.readable.indexOf(nextElement)
       : this.readable[reverse ? 'findLastIndex' : 'findIndex'](
         element => element.matches(Object.keys(listSelector).toString())
-      );
-      
+      ));
+    
     return this;
   }
   
@@ -93,7 +102,8 @@ export class ScreenReader {
     if (currentElement) {
       currentElement.click();
       this.readable = this.collect();
-      this.current = this.readable.indexOf(currentElement) || 0;
+      
+      this.setCurrent(this.readable.indexOf(currentElement) || 0);
     }
     
     return this;

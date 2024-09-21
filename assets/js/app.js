@@ -19,6 +19,10 @@ window.addEventListener("load", () => {
   // Initialize screen reader
   let sr = new ScreenReader(SCREEN, ELEMENTS);
   
+  sr.addEventListener('change', (event) => {
+    console.log(event.detail.current);
+  });
+  
   // Check live region
   if (sr.current) VIEWER.innerHTML = `<p>${sr.speak({ wrapper: accName }).substring(0, 100)}</p>`;
   

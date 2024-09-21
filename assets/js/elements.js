@@ -24,7 +24,7 @@ export const ELEMENTS = {
     ASIDE: "Section complémentaire",
     SECTION: "Section",
     ARTICLE: "Article",
-    DIV: "BLoc"
+    DIV: "Zone"
   },
   headings: {
     H1: "Titre de niveau 1",
