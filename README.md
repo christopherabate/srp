@@ -22,7 +22,7 @@ reader.move();
 reader.activate();
 
 // Get additionnal description
-reader.activate();
+reader.speak();
 ```
 
 ## Usage
