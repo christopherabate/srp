@@ -23,7 +23,8 @@ export const ELEMENTS = {
     FOOTER: "Pied de page",
     ASIDE: "Section complémentaire",
     SECTION: "Section",
-    ARTICLE: "Article"
+    ARTICLE: "Article",
+    DIV: "BLoc"
   },
   headings: {
     H1: "Titre de niveau 1",

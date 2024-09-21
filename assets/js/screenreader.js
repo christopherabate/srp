@@ -8,8 +8,8 @@ export class ScreenReader {
   constructor(screen, elements = { 'html': { '*': "HTML Tag" } }) {
     this.screen = screen;
     this.elements = elements;
-    this.readable = this.collect();
     this.current = 0;
+    this.readable = this.collect();
   }
   
   /**
@@ -25,6 +25,7 @@ export class ScreenReader {
   /**
    * Collects the elements from the DOM, based on the defined list of elements.
    * Filters out hidden or aria-hidden elements.
+   * Also checks the role of elements to determine the first "live" element.
    * @param {string} [subset=''] - A subset of elements to collect, if specified.
    * @returns {HTMLElement[]} - A list of readable elements.
    */
@@ -32,22 +33,27 @@ export class ScreenReader {
     const selectors = subset
       ? this.elements[subset]
       : Object.assign({}, ...Object.values(this.elements));
+      
+    const isVisible = (element) => {
+      if (!element) return true;
+      const computedStyle = getComputedStyle(element);
+      if (computedStyle.visibility === 'hidden' || computedStyle.display === 'none' || element.closest('[aria-hidden="true"]')) {
+        return false;
+      }
+      return isVisible(element.parentElement);
+    };
     
-    // Cache the computed styles only once per element
-    return [...this.screen.contentWindow.document.querySelectorAll(Object.keys(selectors).toString())]
-      .filter(element => {
-        let currentElement = element;
-        let computedStyle;
-
-        while (currentElement) {
-          computedStyle = getComputedStyle(currentElement);
-          if (computedStyle.visibility === 'hidden' || computedStyle.display === 'none' || currentElement.closest('[aria-hidden="true"]')) {
-            return false;
-          }
-          currentElement = currentElement.parentElement;
-        }
-        return true;
-      });
+    const elements = [...this.screen.contentWindow.document.querySelectorAll(Object.keys(selectors).toString())]
+      .filter(isVisible);
+    
+    this.current = (index => index !== -1 ? index : null)(elements.findIndex(element => element.getAttribute('role') === 'alert'))
+      ?? (index => index !== -1 ? index : null)(elements.findIndex(element => element.hasAttribute('autofocus')))
+      ?? (index => index !== -1 ? index : null)(elements.findIndex(element => element.getAttribute('role') === 'status'))
+      ?? (index => index !== -1 ? index : null)(elements.findIndex(element => element.getAttribute('role') === 'log'))
+      ?? this.current;
+    
+    console.log(this);
+    return elements;
   }
   
   /**

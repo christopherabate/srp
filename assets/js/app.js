@@ -19,6 +19,9 @@ window.addEventListener("load", () => {
   // Initialize screen reader
   let sr = new ScreenReader(SCREEN, ELEMENTS);
   
+  // Check live region
+  if (sr.current) VIEWER.innerHTML = `<p>${sr.speak({ wrapper: accName }).substring(0, 100)}</p>`;
+  
   // Key actions mapping
   const keyActions = {
     arrowdown: () => VIEWER.innerHTML = `<p>${sr.move().speak({ wrapper: accName }).substring(0, 100)}</p><div class="text-secondary">${VIEWER.innerHTML}</div>`,
