@@ -17,48 +17,63 @@ window.addEventListener("load", () => {
   new bootstrap.Modal(RULES).show();
   
   // Initialize screen reader
-  let sr = new ScreenReader(SCREEN, ELEMENTS);
+  const sr = new ScreenReader(SCREEN, ELEMENTS);
   
-  sr.addEventListener('change', (event) => {
-    console.log(event.detail.current);
+  sr.addEventListener('change', function() {
+    VIEWER.innerHTML = `<p>${this.speak({ wrapper: accName }).substring(0, 100)}</p><div class="text-secondary">${VIEWER.innerHTML}</div>`;
   });
-  
-  // Check live region
-  if (sr.current) VIEWER.innerHTML = `<p>${sr.speak({ wrapper: accName }).substring(0, 100)}</p>`;
+
+  const updateList = (subset) => {
+    const elements = sr.collect(subset);
+    LIST.innerHTML = `
+    <h3 class="h6">${elements.length} éléments :</h3>
+    <div class="list-group list-group-flush list-group-numbered">${elements.map(item => `
+      <button type="button" class="list-group-item list-group-item-action" 
+        data-index="${sr.collection.indexOf(item)}">
+        ${sr.speak({ wrapper: accName, element: item }).substring(0, 100)}
+      </button>
+      `).join('')}
+    </div>
+    `;
+  };
+
+  const showMask = () => {
+    MASK.addEventListener('mousemove', (event) => {
+      MASK.style.background = `linear-gradient(180deg, rgba(0,0,0,1) ${event.layerY - 20}px, rgba(0,0,0,0) ${event.layerY - 20}px ${event.layerY + 20}px, rgba(0,0,0,1) ${event.layerY + 20}px)`;
+    });
+    MASK.classList.replace('invisible', 'visible');
+    SCREEN.classList.replace('invisible', 'visible');
+  };
+
+  const hideMask = () => {
+    MASK.classList.replace('visible', 'invisible');
+    SCREEN.classList.replace('invisible', 'visible');
+  };
   
   // Key actions mapping
   const keyActions = {
-    arrowdown: () => VIEWER.innerHTML = `<p>${sr.move().speak({ wrapper: accName }).substring(0, 100)}</p><div class="text-secondary">${VIEWER.innerHTML}</div>`,
-    arrowup: () => VIEWER.innerHTML = `<p>${sr.move({ reverse: true }).speak({ wrapper: accName }).substring(0, 100)}</p><div class="text-secondary">${VIEWER.innerHTML}</div>`,
-    h: (shiftKey) => VIEWER.innerHTML = `<p>${sr.move({ list: "headings", reverse: shiftKey }).speak({ wrapper: accName }).substring(0, 100)}</p><div class="text-secondary">${VIEWER.innerHTML}</div>`,
-    i: (shiftKey) => VIEWER.innerHTML = `<p>${sr.move({ list: "listitems", reverse: shiftKey }).speak({ wrapper: accName }).substring(0, 100)}</p><div class="text-secondary">${VIEWER.innerHTML}</div>`,
-    d: (shiftKey) => VIEWER.innerHTML = `<p>${sr.move({ list: "landmarks", reverse: shiftKey }).speak({ wrapper: accName }).substring(0, 100)}</p><div class="text-secondary">${VIEWER.innerHTML}</div>`,
-    tab: (shiftKey) => VIEWER.innerHTML = `<p>${sr.move({ list: "interactives", reverse: shiftKey }).speak({ wrapper: accName }).substring(0, 100)}</p><div class="text-secondary">${VIEWER.innerHTML}</div>`,
-    enter: () => VIEWER.innerHTML = `<p>${sr.activate().speak({ wrapper: accName }).substring(0, 100)}</p><div class="text-secondary">${VIEWER.innerHTML}</div>`,
-    " ": () => VIEWER.innerHTML = `<p>${sr.activate().speak({ wrapper: accName }).substring(0, 100)}</p><div class="text-secondary">${VIEWER.innerHTML}</div>`,
-    escape: () => VIEWER.innerHTML = `<p>${sr.activate().speak({ wrapper: accName }).substring(0, 100)}</p><div class="text-secondary">${VIEWER.innerHTML}</div>`,
-    t: () => VIEWER.innerHTML = `<p>Titre de la page : ${SCREEN.contentWindow.document.title}</p><div class="text-secondary">${VIEWER.innerHTML}</div>`,
-    1: () => LIST.innerHTML = `<h3 class="h6">${sr.collect('interactives').length} éléments interactifs :</h3><div class="list-group list-group-flush list-group-numbered">${sr.collect('interactives').map(interactive => [`<button type="button" class="list-group-item list-group-item-action" data-index="${sr.readable.indexOf(sr.readable.find((element) => element === interactive))}">${sr.speak({ wrapper: accName, element: interactive }).substring(0, 100)}</button>`]).join('')}</div>`,
-    2: () => LIST.innerHTML = `<h3 class="h6">${sr.collect('headings').length} titres :</h3><div class="list-group list-group-flush list-group-numbered">${sr.collect('headings').map(heading => [`<button type="button" class="list-group-item list-group-item-action" data-index="${sr.readable.indexOf(sr.readable.find((element) => element === heading))}">${sr.speak({ wrapper: accName, element: heading }).substring(0, 100)}</button>`]).join('')}</div>`,
-    3: () => LIST.innerHTML = `<h3 class="h6">${sr.collect('landmarks').length} régions :</h3><div class="list-group list-group-flush list-group-numbered">${sr.collect('landmarks').map(landmark => [`<button type="button" class="list-group-item list-group-item-action" data-index="${sr.readable.indexOf(sr.readable.find((element) => element === landmark))}">${sr.speak({ wrapper: accName, element: landmark }).substring(0, 100)}</button>`]).join('')}</div>`,
-    m: () => {
-      MASK.addEventListener('mousemove', (event) => {
-        MASK.style.background = `linear-gradient(180deg, rgba(0,0,0,1) ${event.layerY - 20}px, rgba(0,0,0,0) ${event.layerY - 20}px ${event.layerY + 20}px, rgba(0,0,0,1) ${event.layerY + 20}px)`;
-      });
-      MASK.classList.replace('invisible', 'visible');
-      SCREEN.classList.replace('invisible', 'visible');
-    },
-    f: () => {
-      MASK.classList.replace('visible', 'invisible');
-      SCREEN.classList.replace('invisible', 'visible');
-    }
+    arrowdown: () => sr.move(),
+    arrowup: () => sr.move({ reverse: true }),
+    h: (shiftKey) => sr.move({ list: "headings", reverse: shiftKey }),
+    i: (shiftKey) => sr.move({ list: "listitems", reverse: shiftKey }),
+    d: (shiftKey) => sr.move({ list: "landmarks", reverse: shiftKey }),
+    tab: (shiftKey) => sr.move({ list: "interactives", reverse: shiftKey }),
+    enter: () => sr.activate().speak({ wrapper: accName }),
+    " ": () => sr.activate().speak({ wrapper: accName }),
+    escape: () => sr.activate().speak({ wrapper: accName }),
+    t: () => VIEWER.innerHTML = `<p>Titre de la page : ${sr.title}</p><div class="text-secondary">${VIEWER.innerHTML}</div>`,
+    1: () => updateList('interactives'),
+    2: () => updateList('headings'),
+    3: () => updateList('landmarks'),
+    m: () => showMask(),
+    f: () => hideMask()
   };
-  
+
   // Event listener for button click in LIST
   LIST.addEventListener("click", (event) => {
     if (event.target.matches("button")) {
       event.preventDefault();
-      VIEWER.innerHTML = `<p>${sr.setCurrent(event.target.closest("button").dataset.index).speak({ wrapper: accName }).substring(0, 100)}</p><div class="text-secondary">${VIEWER.innerHTML}</div>`;
+      sr.setCurrent(event.target.dataset.index);
     }
   });
   
@@ -66,39 +81,40 @@ window.addEventListener("load", () => {
   CONTROLS.querySelectorAll("button").forEach((button) => {
     button.addEventListener("click", (event) => {
       event.preventDefault();
-      
-      const { key, keycode, price } = event.target.closest("button").dataset; // Get key and keyCode from the dataset
+      const { key, keycode, price } = event.target.closest("button").dataset;
 
       // Dispatch keyboard event if key and keyCode are valid
       if (key && keycode) {
         window.dispatchEvent(new KeyboardEvent("keydown", {
-          key: key,
+          key,
           keyCode: keycode,
           which: keycode,
           bubbles: true,
           cancelable: true,
-          shiftKey: event.shiftKey // Pass the actual shiftKey state
+          shiftKey: event.shiftKey
         }));
       }
       
       // Update wallet if price is present
-      if (price) {
-        const newBalance = parseInt(wallet.textContent, 10) - parseInt(price, 10);
-        wallet.textContent = newBalance;
-        
-        const walletAlert = wallet.closest("div.alert");
-        if (newBalance < 100) walletAlert.classList.replace('alert-info', 'alert-warning');
-        if (newBalance <= 0) walletAlert.classList.replace('alert-warning', 'alert-danger');
-      }
+      if (price) updateWallet(price);
     });
   });
 
+  const updateWallet = (price) => {
+    const newBalance = parseInt(WALLET.textContent, 10) - parseInt(price, 10);
+    WALLET.textContent = newBalance;
+
+    const walletAlert = WALLET.closest("div.alert");
+    if (newBalance < 100) walletAlert.classList.replace('alert-info', 'alert-warning');
+    if (newBalance <= 0) walletAlert.classList.replace('alert-warning', 'alert-danger');
+  };
+
   // Wait for a key press
   window.addEventListener("keydown", (event) => {
-    // Check if the key is mapped to an action
-    if (keyActions[event.key.toLowerCase()]) {
+    const action = keyActions[event.key.toLowerCase()];
+    if (action) {
       event.preventDefault();
-      keyActions[event.key.toLowerCase()](event.shiftKey); // Trigger the mapped action and pass the shiftKey state to the action
+      action(event.shiftKey);
     }
   });
   
