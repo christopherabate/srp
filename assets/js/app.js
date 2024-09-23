@@ -80,9 +80,9 @@ window.addEventListener("load", () => {
 
   // Event listener for button click in LIST
   LIST.addEventListener("click", (event) => {
-    if (event.target.matches("button")) {
+    if (event.target.closest("button").matches("button")) {
       event.preventDefault();
-      sr.setCurrent(event.target.dataset.index);
+      sr.setCurrent(event.target.closest("button").dataset.index);
     }
   });
   
