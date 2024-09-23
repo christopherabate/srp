@@ -109,9 +109,9 @@ export class ScreenReader extends EventTarget {
   /**
    * Generates a description of the current element.
    * @param {object} options - Options for describing the element.
-   * @param {function} [options.wrapper] - Custom wrapper for element text.
-   * @param {HTMLElement} [options.element=this.collection[this.current]] - Element to describe.
-   * @returns {string} - Description of the element.
+   * @param {function} [options.wrapper] - Optional custom wrapper for element text.
+   * @param {HTMLElement} [options.element=this.collection[this.current]] - The element to describe (defaults to the current element).
+   * @returns {object} - An object containing the description of the element, including its role, name, and value.
    */
   speak({ wrapper, element = this.collection[this.current] } = {}) {
     const role = (typeof Object.assign({}, ...Object.values(this.elements))[`[role="${element.getAttribute('role')}"]`] === 'function'
