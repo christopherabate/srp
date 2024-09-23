@@ -22,7 +22,9 @@ reader.move();
 reader.activate();
 
 // Get additionnal description
-reader.speak();
+reader.speak().role;
+reader.speak().name;
+reader.speak().value;
 ```
 
 ## Usage
@@ -107,7 +109,7 @@ reader.activate();
 
 #### `speak({ wrapper, element = this.readable[this.current] } = {})`
 
-Generate a string describing the current element, including its tag name, text content, attributes, and state (e.g., required, checked).
+Generates an object containing the description of the element, including its role, name, and value.
 
 ```js
 reader.speak();
@@ -118,7 +120,7 @@ reader.speak();
 | `wrapper`     | function   | Optional. A function to format the element's text.                             |
 | `element`     | HTMLElement| Optional. The element to describe (default: the current element).              |
 
-**Returns**: A `string` representing the verbal description of the current element.
+**Returns**: An `object` containing the description of the element, including its role, name, and value.
 
 ---
 
