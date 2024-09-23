@@ -123,7 +123,6 @@ window.addEventListener("load", () => {
   // Mutation observer to trigger text-to-speech when content changes
   const observer = new MutationObserver((mutationsList) => {
     mutationsList.forEach((mutation) => {
-      console.log(mutation);
       speechSynthesis.cancel();
       speechSynthesis.speak(new SpeechSynthesisUtterance(mutation.target.firstChild.textContent));
     });

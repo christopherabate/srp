@@ -52,7 +52,7 @@ export class ScreenReader extends EventTarget {
 
     const tags = subset ? this.elements[subset] : Object.assign({}, ...Object.values(this.elements));
     
-    return [...this.screen.contentWindow.document.querySelectorAll(Object.keys(tags).toString())].filter(isVisible);
+    return [...this.screen.contentWindow.document.querySelectorAll(Object.keys(tags).join(','))].filter(isVisible);
   }
 
   /**
@@ -101,8 +101,6 @@ export class ScreenReader extends EventTarget {
       this.live = null;
     }
     
-    console.log(this);
-    
     return this;
   }
 
@@ -115,7 +113,9 @@ export class ScreenReader extends EventTarget {
    */
   speak({ wrapper, element = this.collection[this.current] } = {}) {
     const speech = [
-      Object.assign({}, ...Object.values(this.elements))[element.tagName] || '',
+      Object.assign({}, ...Object.values(this.elements))[`[role="${element.getAttribute('role')}"]`]?.call(Object.assign({}, ...Object.values(this.elements)))
+       || Object.assign({}, ...Object.values(this.elements))[element.tagName]
+       || '',
       (wrapper ? wrapper(element) : element.textContent?.trim()) || '(empty)',
       element.selectedOptions ? [...element.selectedOptions].map(option => option.label).join(', ') : '',
       element.value ? element.value.trim() : '',

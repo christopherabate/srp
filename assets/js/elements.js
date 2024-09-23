@@ -25,6 +25,14 @@ export const ELEMENTS = {
     ASIDE: "Section complémentaire",
     SECTION: "Section",
     ARTICLE: "Article",
+    '[role="banner"]': function() { return this.HEADER; },
+    '[role="navigation"]': function() { return this.NAV; },
+    '[role="main"]': function() { return this.MAIN; },
+    '[role="region"]': function() { return this.SECTION; },
+    '[role="complementary"]': function() { return this.ASIDE; },
+    '[role="contentinfo"]': function() { return this.FOOTER; },
+    '[role="search"]': "Recherche",
+    '[role="form"]': "Formulaire",
   },
   headings: {
     H1: "Titre de niveau 1",
@@ -35,6 +43,7 @@ export const ELEMENTS = {
     H6: "Titre de niveau 6",
   },
   textuals: {
+    '[role="presentation"]': "Texte",
     P: "Paragraphe",
     BLOCKQUOTE: "Citation",
     Q: "Citation courte",
