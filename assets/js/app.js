@@ -23,18 +23,18 @@ window.addEventListener("load", () => {
     VIEWER.innerHTML = `<p>${this.speak({ wrapper: accName }).substring(0, 100)}</p><div class="text-secondary">${VIEWER.innerHTML}</div>`;
   });
 
-  const updateList = (subset) => {
+  const updateList = (subset = LIST.getAttribute('data-subset')) => {
+    if (!subset) return false;
     const elements = sr.collect(subset);
-    LIST.innerHTML = `
-    <h3 class="h6">${elements.length} éléments :</h3>
+    LIST.setAttribute('data-subset', subset);
+    LIST.innerHTML = `<h3 class="h6">${elements.length} éléments :</h3>
     <div class="list-group list-group-flush list-group-numbered">${elements.map(item => `
       <button type="button" class="list-group-item list-group-item-action" 
         data-index="${sr.collection.indexOf(item)}">
         ${sr.speak({ wrapper: accName, element: item }).substring(0, 100)}
       </button>
       `).join('')}
-    </div>
-    `;
+    </div>`;
   };
 
   const showMask = () => {
@@ -58,9 +58,11 @@ window.addEventListener("load", () => {
     i: (shiftKey) => sr.move({ list: "listitems", reverse: shiftKey }),
     d: (shiftKey) => sr.move({ list: "landmarks", reverse: shiftKey }),
     tab: (shiftKey) => sr.move({ list: "interactives", reverse: shiftKey }),
-    enter: () => sr.activate().speak({ wrapper: accName }),
-    " ": () => sr.activate().speak({ wrapper: accName }),
-    escape: () => sr.activate().speak({ wrapper: accName }),
+    enter: () => {
+      sr.activate().speak({ wrapper: accName });
+      updateList();},
+    " ": () => (sr.activate().speak({ wrapper: accName }), updateList()),
+    escape: () => sr.collection[sr.current].dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", keyCode: 27, which: 27, bubbles: true, cancelable: true })),
     t: () => VIEWER.innerHTML = `<p>Titre de la page : ${sr.title}</p><div class="text-secondary">${VIEWER.innerHTML}</div>`,
     1: () => updateList('interactives'),
     2: () => updateList('headings'),
@@ -121,12 +123,13 @@ window.addEventListener("load", () => {
   // Mutation observer to trigger text-to-speech when content changes
   const observer = new MutationObserver((mutationsList) => {
     mutationsList.forEach((mutation) => {
+      console.log(mutation);
       speechSynthesis.cancel();
       speechSynthesis.speak(new SpeechSynthesisUtterance(mutation.target.firstChild.textContent));
     });
   });
 
-  // Observe changes in VIEWER and LIST elements
-  observer.observe(VIEWER, { childList: true });
-  observer.observe(LIST, { childList: true });
+  // Observe changes in VIEWER and LIST first child elements
+  observer.observe(VIEWER , { childList: true });
+  observer.observe(LIST , { childList: true });
 });

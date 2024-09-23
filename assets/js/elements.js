@@ -2,19 +2,20 @@ export const ELEMENTS = {
   lists: {
     OL: "Liste ordonnée",
     UL: "Liste non-ordonnée",
-    DL: "Liste de définitions"
+    DL: "Liste de définitions",
   },
   listitems: {
     LI: "Élément de liste",
     DT: "Terme",
-    DD: "Définition"
+    DD: "Définition",
+    OPTION: "Choix",
   },
   interactives: {
     A: "Lien",
     BUTTON: "Bouton",
     INPUT: "Champ",
     SELECT: "Liste de sélection",
-    TEXTAREA: "Zone de texte"
+    TEXTAREA: "Zone de texte",
   },
   landmarks: {
     HEADER: "En-tête de page",
@@ -24,7 +25,6 @@ export const ELEMENTS = {
     ASIDE: "Section complémentaire",
     SECTION: "Section",
     ARTICLE: "Article",
-    DIV: "Zone"
   },
   headings: {
     H1: "Titre de niveau 1",
@@ -32,14 +32,14 @@ export const ELEMENTS = {
     H3: "Titre de niveau 3",
     H4: "Titre de niveau 4",
     H5: "Titre de niveau 5",
-    H6: "Titre de niveau 6"
+    H6: "Titre de niveau 6",
   },
   textuals: {
     P: "Paragraphe",
     BLOCKQUOTE: "Citation",
     Q: "Citation courte",
     HR: "Séparateur horizontal",
-    ADDRESS: "Adresse"
+    ADDRESS: "Adresse",
   },
   nontextuals: {
     IMG: "Image",
@@ -50,6 +50,6 @@ export const ELEMENTS = {
     AUDIO: "Audio",
     TRACK: "Piste de texte",
     EMBED: "Intégration multimédia",
-    OBJECT: "Objet multimédia"
+    OBJECT: "Objet multimédia",
   }
 };

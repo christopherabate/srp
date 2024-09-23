@@ -11,6 +11,7 @@ export class ScreenReader extends EventTarget {
     this.collection = this.collect();
     this.current = 0;
     this.title = this.screen.contentWindow.document.title;
+    this.live = null;
   }
 
   /**
@@ -33,6 +34,7 @@ export class ScreenReader extends EventTarget {
       this.current = newIndex;
       this.dispatchEvent('change', this);
     }
+    
     return this;
   }
 
@@ -49,6 +51,7 @@ export class ScreenReader extends EventTarget {
     };
 
     const tags = subset ? this.elements[subset] : Object.assign({}, ...Object.values(this.elements));
+    
     return [...this.screen.contentWindow.document.querySelectorAll(Object.keys(tags).toString())].filter(isVisible);
   }
 
@@ -64,8 +67,9 @@ export class ScreenReader extends EventTarget {
     const direction = reverse ? 'findLast' : 'find';
     const elements = reverse ? this.collection.slice(0, this.current) : this.collection.slice(this.current + 1);
 
-    const nextElement = elements[direction](el => el.matches(Object.keys(tags).toString()));
+    const nextElement = elements[direction](element => element.matches(Object.keys(tags).toString()));
     this.setCurrent(nextElement ? this.collection.indexOf(nextElement) : reverse ? this.collection.length - 1 : 0);
+    
     return this;
   }
 
@@ -74,16 +78,31 @@ export class ScreenReader extends EventTarget {
    * @returns {ScreenReader} - The current instance (for chaining).
    */
   activate() {
-    const currentElement = this.collection[this.current];
-    if (currentElement) {
-      currentElement.click();
-      this.collection = this.collect();
-      
-      this.setCurrent((index => index !== -1 ? index : null)(this.collection.findIndex(element => element.getAttribute('role') === 'alert'))
-        ?? (index => index !== -1 ? index : null)(this.collection.findIndex(element => element.getAttribute('role') === 'status'))
-        ?? (index => index !== -1 ? index : null)(this.collection.findIndex(element => element.getAttribute('role') === 'log'))
-        ?? (this.collection.indexOf(currentElement) || 0));
+    const currentElement = this.collection[this.current].closest('select') || this.collection[this.current];
+
+    currentElement.tagName.toLowerCase() === 'select' 
+      ? currentElement.value = this.collection[this.current].value 
+      : currentElement.click();
+    
+    this.collection = this.collect();
+    
+    const indexFound = ['alert', 'status', 'log']
+      .map(role => this.collection.findIndex(element => element.closest(`[role="${role}"]`)))
+      .find(index => index !== -1);
+    
+    if (indexFound && this.live !== this.collection[indexFound]) {
+      this.setCurrent(indexFound);
+      this.live = this.collection[this.current];
+    } else {
+      this.setCurrent(this.collection.indexOf(currentElement) || 0);
     }
+    
+    if (!this.collection.includes(this.live)) {
+      this.live = null;
+    }
+    
+    console.log(this);
+    
     return this;
   }
 
