@@ -101,6 +101,8 @@ export class ScreenReader extends EventTarget {
       this.live = null;
     }
     
+    console.log(this);
+    
     return this;
   }
 
@@ -112,11 +114,15 @@ export class ScreenReader extends EventTarget {
    * @returns {string} - Description of the element.
    */
   speak({ wrapper, element = this.collection[this.current] } = {}) {
-    const speech = [
-      Object.assign({}, ...Object.values(this.elements))[`[role="${element.getAttribute('role')}"]`]?.call(Object.assign({}, ...Object.values(this.elements)))
-       || Object.assign({}, ...Object.values(this.elements))[element.tagName]
-       || '',
-      (wrapper ? wrapper(element) : element.textContent?.trim()) || '(empty)',
+    const role = (typeof Object.assign({}, ...Object.values(this.elements))[`[role="${element.getAttribute('role')}"]`] === 'function'
+      ? Object.assign({}, ...Object.values(this.elements))[`[role="${element.getAttribute('role')}"]`].call(Object.assign({}, ...Object.values(this.elements)))
+      : Object.assign({}, ...Object.values(this.elements))[`[role="${element.getAttribute('role')}"]`])
+      || Object.assign({}, ...Object.values(this.elements))[element.tagName]
+      || '';
+    
+    const name = (wrapper ? wrapper(element) : element.textContent?.trim()) || '(empty)';
+    
+    const value = [
       element.selectedOptions ? [...element.selectedOptions].map(option => option.label).join(', ') : '',
       element.value ? element.value.trim() : '',
       element.hasAttribute('alt') ? (element.getAttribute('alt') ? '' : 'decorative') : (element.getAttribute('src') ? element.getAttribute('src').split('/').pop() : ''),
@@ -126,7 +132,11 @@ export class ScreenReader extends EventTarget {
       element.selected ? '(selected)' : '',
       element.disabled ? '(disabled)' : ''
     ];
-
-    return speech.filter(Boolean).join(' ');
+    
+    return {
+      role,
+      name,
+      value: value.filter(Boolean).join(' ').trim()
+    };
   }
 }

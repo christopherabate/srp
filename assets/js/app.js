@@ -20,7 +20,13 @@ window.addEventListener("load", () => {
   const sr = new ScreenReader(SCREEN, ELEMENTS);
   
   sr.addEventListener('change', function() {
-    VIEWER.innerHTML = `<p>${this.speak({ wrapper: accName }).substring(0, 100)}</p><div class="text-secondary">${VIEWER.innerHTML}</div>`;
+    VIEWER.innerHTML = `<p>
+      <strong>${this.speak({ wrapper: accName }).role}</strong>
+      ${this.speak({ wrapper: accName }).name}
+      <em>${this.speak({ wrapper: accName }).value}</em></p>
+    <div class="text-secondary">
+      ${VIEWER.innerHTML}
+    </div>`;
   });
 
   const updateList = (subset = LIST.getAttribute('data-subset')) => {
@@ -31,7 +37,8 @@ window.addEventListener("load", () => {
     <div class="list-group list-group-flush list-group-numbered">${elements.map(item => `
       <button type="button" class="list-group-item list-group-item-action" 
         data-index="${sr.collection.indexOf(item)}">
-        ${sr.speak({ wrapper: accName, element: item }).substring(0, 100)}
+        <strong>${sr.speak({ wrapper: accName, element: item }).role}</strong>
+        ${subset !== "landmarks" ? sr.speak({ wrapper: accName, element: item }).name : ''}
       </button>
       `).join('')}
     </div>`;
@@ -59,9 +66,9 @@ window.addEventListener("load", () => {
     d: (shiftKey) => sr.move({ list: "landmarks", reverse: shiftKey }),
     tab: (shiftKey) => sr.move({ list: "interactives", reverse: shiftKey }),
     enter: () => {
-      sr.activate().speak({ wrapper: accName });
+      sr.activate();
       updateList();},
-    " ": () => (sr.activate().speak({ wrapper: accName }), updateList()),
+    " ": () => (sr.activate(), updateList()),
     escape: () => sr.collection[sr.current].dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", keyCode: 27, which: 27, bubbles: true, cancelable: true })),
     t: () => VIEWER.innerHTML = `<p>Titre de la page : ${sr.title}</p><div class="text-secondary">${VIEWER.innerHTML}</div>`,
     1: () => updateList('interactives'),
