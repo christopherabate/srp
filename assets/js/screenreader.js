@@ -28,9 +28,9 @@ export class ScreenReader extends EventTarget {
    * @param {number} index - New index.
    * @returns {ScreenReader} - The current instance (for chaining).
    */
-  setCurrent(index) {
+  setCurrent(index, force = true) {
     const newIndex = Math.max(0, parseInt(index, 10));
-    if (this.current !== newIndex) {
+    if (force || this.current !== newIndex) {
       this.current = newIndex;
       this.dispatchEvent('change', this);
     }
@@ -78,30 +78,62 @@ export class ScreenReader extends EventTarget {
    * @returns {ScreenReader} - The current instance (for chaining).
    */
   activate() {
-    const currentElement = this.collection[this.current].closest('select') || this.collection[this.current];
-
-    currentElement.tagName.toLowerCase() === 'select' 
-      ? currentElement.value = this.collection[this.current].value 
-      : currentElement.click();
+    if (!this.collection[this.current].disabled) {
+      let force = false;
+      
+      const currentElement = this.collection[this.current].closest('select') || this.collection[this.current];
+      
+      switch (currentElement.tagName.toLowerCase()) {
+        case 'select':
+          currentElement.value = this.collection[this.current].value;
+          break;
+        case 'textarea':
+          currentElement.value = prompt(this.speak(currentElement).role, currentElement.value);
+          force = true;
+          break;
+        case 'input':
+          switch (currentElement.type) {
+            case 'text':
+            case 'email':
+            case 'number':
+            case 'url':
+            case 'tel':
+            case 'search':
+            case 'date':
+            case 'month':
+            case 'week':
+            case 'time':
+              currentElement.value = prompt(this.speak(currentElement).role, currentElement.value);
+              break;
+            case 'checkbox':
+              currentElement.checked = !currentElement.checked;
+              break;
+            case 'radio':
+              currentElement.checked = true;
+              break;
+          }
+          force = true;
+          break;
+        default: currentElement.click();
+      }
     
-    this.collection = this.collect();
-    
-    const indexFound = ['alert', 'status', 'log']
-      .map(role => this.collection.findIndex(element => element.closest(`[role="${role}"]`)))
-      .find(index => index !== -1);
-    
-    if (indexFound && this.live !== this.collection[indexFound]) {
-      this.setCurrent(indexFound);
-      this.live = this.collection[this.current];
-    } else {
-      this.setCurrent(this.collection.indexOf(currentElement) || 0);
+      this.collection = this.collect();
+      
+      const indexFound = ['alert', 'status', 'log']
+        .map(role => this.collection.findIndex(element => element.closest(`[role="${role}"]`)))
+        .find(index => index !== -1);
+      
+      if (indexFound && this.live !== this.collection[indexFound]) {
+        this.setCurrent(indexFound);
+        this.live = this.collection[this.current];
+      } else {
+        this.setCurrent(this.collection.indexOf(currentElement) || 0, force);
+      }
+      
+      if (!this.collection.includes(this.live)) {
+        this.live = null;
+      }
     }
-    
-    if (!this.collection.includes(this.live)) {
-      this.live = null;
-    }
-    
-    console.log(this);
     
     return this;
   }
