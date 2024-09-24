@@ -3,8 +3,8 @@ import { ScreenReader } from './screenreader.js';
 import { accName } from './accname.js';
 
 // DOM elements
+const CONTROLS = document.querySelectorAll(".controls");
 const SCREEN = document.querySelector("#screen");
-const CONTROLS = document.querySelector("#controls");
 const MASK = document.querySelector("#mask");
 const VIEWER = document.querySelector("#viewer");
 const LIST = document.querySelector("#list");
@@ -43,19 +43,6 @@ window.addEventListener("load", () => {
       `).join('')}
     </div>`;
   };
-
-  const showMask = () => {
-    MASK.addEventListener('mousemove', (event) => {
-      MASK.style.background = `linear-gradient(180deg, rgba(0,0,0,1) ${event.layerY - 20}px, rgba(0,0,0,0) ${event.layerY - 20}px ${event.layerY + 20}px, rgba(0,0,0,1) ${event.layerY + 20}px)`;
-    });
-    MASK.classList.replace('invisible', 'visible');
-    SCREEN.classList.replace('invisible', 'visible');
-  };
-
-  const hideMask = () => {
-    MASK.classList.replace('visible', 'invisible');
-    SCREEN.classList.replace('invisible', 'visible');
-  };
   
   // Key actions mapping
   const keyActions = {
@@ -67,15 +54,25 @@ window.addEventListener("load", () => {
     tab: (shiftKey) => sr.move({ list: "interactives", reverse: shiftKey }),
     enter: () => {
       sr.activate();
-      updateList();},
+      updateList();
+    },
     " ": () => (sr.activate(), updateList()),
     escape: () => sr.collection[sr.current].dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", keyCode: 27, which: 27, bubbles: true, cancelable: true })),
     t: () => VIEWER.innerHTML = `<p>Titre de la page : ${sr.title}</p><div class="text-secondary">${VIEWER.innerHTML}</div>`,
     1: () => updateList('interactives'),
     2: () => updateList('headings'),
     3: () => updateList('landmarks'),
-    m: () => showMask(),
-    f: () => hideMask()
+    m: () => {
+      MASK.addEventListener('mousemove', (event) => {
+        MASK.style.background = `linear-gradient(180deg, rgba(0,0,0,1) ${event.layerY - 20}px, rgba(0,0,0,0) ${event.layerY - 20}px ${event.layerY + 20}px, rgba(0,0,0,1) ${event.layerY + 20}px)`;
+      });
+      MASK.classList.replace('invisible', 'visible');
+      SCREEN.classList.replace('invisible', 'visible');
+    },
+    f: () => {
+      MASK.classList.replace('visible', 'invisible');
+      SCREEN.classList.replace('invisible', 'visible');
+    }
   };
 
   // Event listener for button click in LIST
@@ -87,25 +84,27 @@ window.addEventListener("load", () => {
   });
   
   // Event listener for button click in CONTROLS
-  CONTROLS.querySelectorAll("button").forEach((button) => {
-    button.addEventListener("click", (event) => {
-      event.preventDefault();
-      const { key, keycode, price } = event.target.closest("button").dataset;
+  CONTROLS.forEach((control) => {
+    control.querySelectorAll("button").forEach((button) => {
+      button.addEventListener("click", (event) => {
+        event.preventDefault();
+        const { key, keycode, price } = event.target.closest("button").dataset;
 
-      // Dispatch keyboard event if key and keyCode are valid
-      if (key && keycode) {
-        window.dispatchEvent(new KeyboardEvent("keydown", {
-          key,
-          keyCode: keycode,
-          which: keycode,
-          bubbles: true,
-          cancelable: true,
-          shiftKey: event.shiftKey
-        }));
-      }
-      
-      // Update wallet if price is present
-      if (price) updateWallet(price);
+        // Dispatch keyboard event if key and keyCode are valid
+        if (key && keycode) {
+          window.dispatchEvent(new KeyboardEvent("keydown", {
+            key,
+            keyCode: keycode,
+            which: keycode,
+            bubbles: true,
+            cancelable: true,
+            shiftKey: event.shiftKey
+          }));
+        }
+        
+        // Update wallet if price is present
+        if (price) updateWallet(price);
+      });
     });
   });
 
