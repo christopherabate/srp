@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="assets/css/srp.css" rel="stylesheet">
+    <style>
+      #viewer .row .col:nth-child(1),
+      #history .row .col:nth-child(1) {
+          text-align: right;
+      }
+
+      #viewer .row .col:nth-child(2),
+      #history .row .col:nth-child(2) {
+          text-align: center;
+      }
+
+      #viewer .row .col:nth-child(3),
+      #history .row .col:nth-child(3) {
+          text-align: left;
+      }
+      
+      #history .row:nth-child(1) {
+          opacity: .75;
+      }
+
+      #history .row:nth-child(2) {
+          opacity: .50;
+      }
+
+      #history .row:nth-child(3) {
+          opacity: .25;
+      }
+    </style>
+    <title>Screen Reader Puzzle</title>
+  </head>
+  <body>
+    <div class="d-flex align-items-center vh-100">
+      <main role="main" class="container lead">
+        <div id="viewer" class="fw-semibold">...</div>
+        <div id="history"></div>
+      </main>
+    </div>
+    <iframe id="screen" class="invisible" title="Puzzle" src="screen.html"></iframe>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script type="module">
+    import { ELEMENTS } from './assets/js/elements.js';
+    import { ScreenReader } from './assets/js/screenreader.js';
+    import { accName } from './assets/js/accname.js';
+
+    // DOM elements
+    const SCREEN = document.querySelector("#screen");
+    const VIEWER = document.querySelector("#viewer");
+    const HISTORY = document.querySelector("#history");
+
+    // On page load
+    window.addEventListener("load", () => {
+      // Initialize screen reader
+      const sr = new ScreenReader(SCREEN, ELEMENTS);
+      
+      sr.addEventListener('change', function() {
+        if (HISTORY.children.length >= 3) {
+          HISTORY.removeChild(HISTORY.lastChild);
+        }
+        HISTORY.innerHTML = VIEWER.innerHTML + HISTORY.innerHTML;
+        VIEWER.innerHTML = `<div class="row">${Object.values(this.speak({ wrapper: accName })).map((data) => [`<div class="col">${data.length > 50 ? data.substring(0, 49) + '&hellip;' : data}</div>`]).join("")}</div>`;
+        speechSynthesis.cancel();
+        speechSynthesis.speak(new SpeechSynthesisUtterance(VIEWER.innerText));
+      });
+      
+      VIEWER.innerHTML = `<div class="row"><div class="col">Titre de la page</div><div class="col">${sr.title}</div><div class="col"></div></div>`;
+      
+      // Key actions mapping
+      const keyActions = {
+        arrowdown: () => sr.move(),
+        arrowup: () => sr.move({ reverse: true }),
+        h: (shiftKey) => sr.move({ list: "headings", reverse: shiftKey }),
+        i: (shiftKey) => sr.move({ list: "listitems", reverse: shiftKey }),
+        d: (shiftKey) => sr.move({ list: "landmarks", reverse: shiftKey }),
+        tab: (shiftKey) => sr.move({ list: "interactives", reverse: shiftKey }),
+        enter: () => sr.activate(),
+        " ": () => sr.activate(),
+        escape: () => sr.collection[sr.current].dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", keyCode: 27, which: 27, bubbles: true, cancelable: true })),
+      };
+
+      // Wait for a key press
+      window.addEventListener("keydown", (event) => {
+        const action = keyActions[event.key.toLowerCase()];
+        if (action) {
+          event.preventDefault();
+          action(event.shiftKey);
+        }
+      });
+    });
+  </script>
+</html>

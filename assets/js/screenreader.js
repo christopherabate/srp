@@ -152,7 +152,7 @@ export class ScreenReader extends EventTarget {
       || Object.assign({}, ...Object.values(this.elements))[element.tagName]
       || '';
     
-    const name = (wrapper ? wrapper(element) : element.textContent?.trim()) || '(empty)';
+    const name = (wrapper ? wrapper(element) : element.textContent?.trim()) || '';
     
     const value = [
       element.selectedOptions ? [...element.selectedOptions].map(option => option.label).join(', ') : '',
@@ -168,7 +168,7 @@ export class ScreenReader extends EventTarget {
     return {
       role,
       name,
-      value: value.filter(Boolean).join(' ').trim()
+      value: value.filter(Boolean).join(' ')
     };
   }
 }

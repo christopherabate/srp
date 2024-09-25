@@ -58,7 +58,7 @@ window.addEventListener("load", () => {
     },
     " ": () => (sr.activate(), updateList()),
     escape: () => sr.collection[sr.current].dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", keyCode: 27, which: 27, bubbles: true, cancelable: true })),
-    t: () => VIEWER.innerHTML = `<p>Titre de la page : ${sr.title}</p><div class="text-secondary">${VIEWER.innerHTML}</div>`,
+    t: () => VIEWER.innerHTML = `<p><strong>Titre de la page</strong> ${sr.title}</p><div class="text-secondary">${VIEWER.innerHTML}</div>`,
     1: () => updateList('interactives'),
     2: () => updateList('headings'),
     3: () => updateList('landmarks'),
