@@ -1,6 +1,6 @@
 # SRP
-[An interactive screen reader puzzle game](https://christopherabate.github.io/srp/)
-[Role/Name/Value](https://christopherabate.github.io/srp/rnv.html)
+- [An interactive screen reader puzzle game](https://christopherabate.github.io/srp/)
+- [Role/Name/Value demonstrator](https://christopherabate.github.io/srp/rnv.html)
 
 
 # ScreenReader
